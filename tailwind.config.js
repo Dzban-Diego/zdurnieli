@@ -26,6 +26,8 @@ module.exports = {
         gray: "#6a6a6a",
         loading: "#5a5a5a",
         orange: "#fa0",
+        black: "#000",
+        white: "#fff",
       },
     },
   },

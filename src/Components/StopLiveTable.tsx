@@ -15,7 +15,7 @@ type Props = {
 const StopLiveTable = async ({ stopId, stopName, bindMover }: Props) => {
   const LineTable = await getLiveTable(stopId);
   const Theme = await getTheme();
-  const isLiked = await getLikeStatus('stop', stopId);
+  const isLiked = await getLikeStatus("stop", stopId);
 
   return (
     <>
@@ -34,7 +34,7 @@ const StopLiveTable = async ({ stopId, stopName, bindMover }: Props) => {
           {stopName}
         </Link>
         <LikeButton
-          cookieKey={'stop'}
+          cookieKey={"stop"}
           name={stopName}
           id={stopId}
           isLiked={isLiked}
@@ -42,12 +42,13 @@ const StopLiveTable = async ({ stopId, stopName, bindMover }: Props) => {
         />
       </div>
       {LineTable ? (
-        <div className="shadow rounded overflow-hidden">
-          <div
-            className={`flex w-full justify-center bg-white p-3 text-xl text-orange dark:bg-black`}
-            dangerouslySetInnerHTML={{ __html: LineTable.data || "" }}
-          />
-        </div>
+        LineTable.map((line, index) => (
+          <div key={index} className={"w-full bg-white dark:bg-black text-orange p-3 text-xl font-bold flex justify-between"}>
+            <span>{line.line}</span>
+            <span>{line.direction}</span>
+            <span>{line.time}</span>
+          </div>
+        ))
       ) : (
         <div className={"h-48 w-full animate-pulse rounded bg-loading"} />
       )}

@@ -1,4 +1,4 @@
-'use server';
+"use server";
 import { JSDOM } from "jsdom";
 
 async function getLiveTable(stopID: string) {
@@ -23,17 +23,22 @@ async function getLiveTable(stopID: string) {
   const trescHtml = new JSDOM(returnData.tresc);
   const body = trescHtml.window.document.body;
   const tbody = body.getElementsByTagName("tbody");
-  const tbodyContent = tbody[0]?.innerHTML || "";
-  const text_1 = tbodyContent
-    .replaceAll(/\t/g, "")
-    .replaceAll("<tr>", "")
-    .replaceAll("</tr>", "")
-    .replaceAll("</td>", "")
-    .replaceAll(/<td class="gmv[a-z]*">/g, "");
-  return {
-    data: text_1,
-    komunikat: returnData.komunikat,
-  };
+  const trs = tbody[0].querySelectorAll("tr");
+  const tableData: {
+    line: string;
+    direction: string;
+    time: string;
+  }[] = [];
+
+  trs.forEach((tr) => {
+    tableData.push({
+      line: tr.children[0].textContent || "",
+      direction: tr.children[1].textContent || "",
+      time: tr.children[2].textContent || "",
+    })
+  });
+
+  return tableData;
 }
 
 export default getLiveTable;
