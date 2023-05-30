@@ -1,5 +1,5 @@
 import React from "react";
-import StopLiveTable from "@/Components/StopLiveTable";
+import StopLiveTable from "@/components/StopLiveTable";
 import getStopTable from "@/actions/getStopTable";
 
 const Line = ({ params: { stop } }: { params: { stop: [string, string] } }) => {

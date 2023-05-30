@@ -1,6 +1,6 @@
 import "./globals.css";
-import Footer from "@/Components/Footer";
-import ChangeThemeButton from "@/Components/ChangeThemeButton";
+import Footer from "@/components/Footer";
+import ChangeThemeButton from "@/components/ChangeThemeButton";
 import { cookies } from "next/headers";
 
 type Props = {

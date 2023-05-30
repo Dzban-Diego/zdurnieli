@@ -1,6 +1,6 @@
 import React from "react";
-import { CustomLink } from "../../Components/CustomLink";
-import { Multiple } from "../../Components/Multiple";
+import { CustomLink } from "../../components/CustomLink";
+import { Multiple } from "../../components/Multiple";
 import getLines from "@/actions/getLines";
 
 const Lines = async () => {

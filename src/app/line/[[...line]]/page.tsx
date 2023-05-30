@@ -1,8 +1,8 @@
 import React from "react";
 import getLineStops from "@/actions/getLineStops";
-import LikeButton from "@/Components/LikeButton";
-import { CustomLink } from "@/Components/CustomLink";
-import { Multiple } from "@/Components/Multiple";
+import LikeButton from "@/components/LikeButton";
+import { CustomLink } from "@/components/CustomLink";
+import { Multiple } from "@/components/Multiple";
 import { getLikeStatus, getTheme } from "@/actions";
 
 // 0 - id 1 - name

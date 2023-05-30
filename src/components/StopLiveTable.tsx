@@ -41,17 +41,18 @@ const StopLiveTable = async ({ stopId, stopName, bindMover }: Props) => {
           Theme={Theme}
         />
       </div>
-      {LineTable ? (
-        LineTable.map((line, index) => (
-          <div key={index} className={"w-full bg-white-100 dark:bg-black text-orange p-3 text-xl font-bold flex justify-between"}>
-            <span>{line.line}</span>
-            <span>{line.direction}</span>
-            <span>{line.time}</span>
+      <div className="bg-white dark:bg-black w-full rounded shadow">
+        {LineTable.map((line, index) => (
+          <div
+            key={index}
+            className={"text-orange p-3 text-xl font-bold flex justify-between"}
+          >
+            <span className="w-1/12">{line.line}</span>
+            <span className="w-8/12">{line.direction}</span>
+            <span className="w-1/12">{line.time}</span>
           </div>
-        ))
-      ) : (
-        <div className={"h-48 w-full animate-pulse rounded bg-loading"} />
-      )}
+        ))}
+      </div>
     </>
   );
 };
