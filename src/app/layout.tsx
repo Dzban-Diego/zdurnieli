@@ -2,6 +2,7 @@ import "./globals.css";
 import Footer from "@/components/Footer";
 import ChangeThemeButton from "@/components/ChangeThemeButton";
 import { cookies } from "next/headers";
+import Link from "next/link";
 
 type Props = {
   children: React.ReactNode;
@@ -13,7 +14,7 @@ export const metadata = {
 
 const MyApp: React.FC<Props> = ({ children }) => {
   const cookieStore = cookies();
-  const theme = cookieStore.get("theme")?.value === 'dark' ? 'dark' : "light";
+  const theme = cookieStore.get("theme")?.value === "dark" ? "dark" : "light";
 
   return (
     <html lang={"pl"} className={theme}>
@@ -21,9 +22,13 @@ const MyApp: React.FC<Props> = ({ children }) => {
         <header
           className={"mx-3 flex justify-between border-b-2 dark:border-white"}
         >
-          <h1 className={"p-4 text-4xl font-medium text-black dark:text-white"}>
-            Zaraz będę
-          </h1>
+          <Link href={"/"}>
+            <h1
+              className={"p-4 text-4xl font-medium text-black dark:text-white"}
+            >
+              Zaraz będę
+            </h1>
+          </Link>
           <ChangeThemeButton theme={theme} />
         </header>
         <main
