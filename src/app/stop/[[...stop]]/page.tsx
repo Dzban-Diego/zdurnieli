@@ -5,7 +5,8 @@ import getStopTable from "@/actions/getStopTable";
 const Line = ({ params: { stop } }: { params: { stop: [string, string] } }) => {
   return (
     <div className={"flex flex-col items-center text-center"}>
-      <StopLiveTable stopId={stop[0]} stopName={stop[1]} />
+      {/*@ts-ignore*/}
+      <StopLiveTable stopId={stop[0]} stopName={decodeURI(stop[1])} />
       <BottomTable query={{ name: stop[1], id: stop[0] }} />
     </div>
   );
@@ -16,6 +17,7 @@ interface Props {
   query: { id: string; name: string };
 }
 
+//@ts-ignore
 const BottomTable: React.FC<Props> = async ({ query }) => {
   const Table = await getStopTable(query.id);
 

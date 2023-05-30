@@ -3,17 +3,23 @@ import getLineStops from "@/actions/getLineStops";
 import LikeButton from "@/Components/LikeButton";
 import { CustomLink } from "@/Components/CustomLink";
 import { Multiple } from "@/Components/Multiple";
+import { getLikeStatus, getTheme } from "@/actions";
 
 // 0 - id 1 - name
 const Line = async ({ params }: { params: { line: [string, string] } }) => {
   const LineStops = await getLineStops(params.line[0]);
+  const Theme = await getTheme();
+  const isLiked = await getLikeStatus("line", params.line[0]);
 
   return (
     <>
       <div className={"flex"}>
         <LikeButton
+          cookieKey={"line"}
           name={params.line[1]}
           id={params.line[0]}
+          Theme={Theme}
+          isLiked={isLiked}
         />
         <h1 className={"p-4 text-4xl dark:text-dark_textColor text-textColor"}>
           Linia {params.line[1]}
@@ -44,7 +50,7 @@ const Side = ({ stops }: { stops: { name: string; id: string }[] }) => {
           key={stop.id}
           text={stop.name}
           selected={valuesIds.includes(stop.id)}
-          href={`/stop/${stop.id}?name=${stop.name}`}
+          href={`/stop/${stop.id}/${stop.name}`}
         />
       ))}
     </div>

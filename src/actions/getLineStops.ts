@@ -16,7 +16,6 @@ async function getLineStops(lineID: string) {
     const arr: { name: string; id: string }[] = [];
     const stopElements = element.querySelectorAll(".przystanek");
     stopElements.forEach((stopEl) => {
-      console.log(stopEl.innerHTML);
       const spans = stopEl.querySelectorAll("span");
       const as = stopEl.querySelectorAll("a");
       const lastA = as[as.length - 1];

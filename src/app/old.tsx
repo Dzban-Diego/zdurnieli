@@ -1,4 +1,5 @@
-import { type NextPage } from "next";
+/*
+ import { type NextPage } from "next";
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import { Page } from "../Components/Page";
 import StopLiveTable from "../Components/StopLiveTable";
@@ -165,3 +166,4 @@ function DraggableList({
     </div>
   );
 }
+*/

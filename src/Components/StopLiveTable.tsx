@@ -4,15 +4,18 @@ import { TbArrowsVertical } from "react-icons/tb";
 import Link from "next/link";
 import { ReactDOMAttributes } from "@use-gesture/react/dist/declarations/src/types";
 import getLiveTable from "@/actions/getLiveTable";
+import { getLikeStatus, getTheme } from "@/actions";
 
 type Props = {
   stopId: string;
   stopName: string;
   bindMover?: () => ReactDOMAttributes;
-}
+};
 
 const StopLiveTable = async ({ stopId, stopName, bindMover }: Props) => {
   const LineTable = await getLiveTable(stopId);
+  const Theme = await getTheme();
+  const isLiked = await getLikeStatus('stop', stopId);
 
   return (
     <>
@@ -30,7 +33,13 @@ const StopLiveTable = async ({ stopId, stopName, bindMover }: Props) => {
         >
           {stopName}
         </Link>
-        <LikeButton name={stopName} id={stopId} />
+        <LikeButton
+          cookieKey={'stop'}
+          name={stopName}
+          id={stopId}
+          isLiked={isLiked}
+          Theme={Theme}
+        />
       </div>
       {LineTable ? (
         <div className="shadow rounded overflow-hidden">
