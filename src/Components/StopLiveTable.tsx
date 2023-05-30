@@ -43,7 +43,7 @@ const StopLiveTable = async ({ stopId, stopName, bindMover }: Props) => {
       </div>
       {LineTable ? (
         LineTable.map((line, index) => (
-          <div key={index} className={"w-full bg-white dark:bg-black text-orange p-3 text-xl font-bold flex justify-between"}>
+          <div key={index} className={"w-full bg-white-100 dark:bg-black text-orange p-3 text-xl font-bold flex justify-between"}>
             <span>{line.line}</span>
             <span>{line.direction}</span>
             <span>{line.time}</span>
