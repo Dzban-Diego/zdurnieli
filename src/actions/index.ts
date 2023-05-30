@@ -48,3 +48,9 @@ export async function getLikeStatus(key: Keys, id: string) {
 
   return liked.findIndex((item) => item.id === id) !== -1;
 }
+
+export async function getLiked(key: Keys) {
+  const likedString = cookies().get(key)?.value || "[]";
+  const liked = JSON.parse(likedString) as Value[];
+  return liked;
+}

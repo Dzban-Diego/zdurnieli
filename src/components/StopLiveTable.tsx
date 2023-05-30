@@ -12,7 +12,8 @@ type Props = {
   bindMover?: () => ReactDOMAttributes;
 };
 
-const StopLiveTable = async ({ stopId, stopName, bindMover }: Props) => {
+// @ts-ignore
+const StopLiveTable: React.FC<Props> = async ({ stopId, stopName, bindMover }) => {
   const LineTable = await getLiveTable(stopId);
   const Theme = await getTheme();
   const isLiked = await getLikeStatus("stop", stopId);
@@ -28,7 +29,7 @@ const StopLiveTable = async ({ stopId, stopName, bindMover }: Props) => {
           />
         ) : null}
         <Link
-          href={`/stop/${stopId}?name=${stopName}`}
+          href={`/stop/${stopId}/${stopName}`}
           className={"p-4 text-2xl text-textColor dark:text-dark_textColor"}
         >
           {stopName}
