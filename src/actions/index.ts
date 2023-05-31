@@ -22,13 +22,11 @@ type Value = {
 };
 
 export async function handleLike(key: Keys, value: Value) {
-  console.log(key, value)
   const likedString = cookies().get(key)?.value || "[]";
   const liked = JSON.parse(likedString) as Value[];
   console.log(liked)
 
   const index = liked.findIndex((item) => item.id === value.id);
-  console.log(index);
   if (index !== -1) {
     liked.splice(index, 1);
     // @ts-ignore
