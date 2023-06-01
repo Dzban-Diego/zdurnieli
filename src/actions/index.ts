@@ -24,18 +24,22 @@ type Value = {
 export async function handleLike(key: Keys, value: Value) {
   const likedString = cookies().get(key)?.value || "[]";
   const liked = JSON.parse(likedString) as Value[];
-  console.log(liked)
+  console.log(liked);
 
   const index = liked.findIndex((item) => item.id === value.id);
   if (index !== -1) {
     liked.splice(index, 1);
     // @ts-ignore
-    cookies().set(key, JSON.stringify(liked));
+    cookies().set(key, JSON.stringify(liked), {
+      expires: 4503599627370495,
+    });
     return false;
   } else {
     liked.push(value);
     // @ts-ignore
-    cookies().set(key, JSON.stringify(liked));
+    cookies().set(key, JSON.stringify(liked), {
+      expires: 4503599627370495,
+    });
     return true;
   }
 }
