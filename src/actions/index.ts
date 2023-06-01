@@ -32,6 +32,7 @@ export async function handleLike(key: Keys, value: Value) {
     // @ts-ignore
     cookies().set(key, JSON.stringify(liked), {
       expires: 4503599627370495,
+      httpOnly: true,
     });
     return false;
   } else {
@@ -39,6 +40,7 @@ export async function handleLike(key: Keys, value: Value) {
     // @ts-ignore
     cookies().set(key, JSON.stringify(liked), {
       expires: 4503599627370495,
+      httpOnly: true,
     });
     return true;
   }

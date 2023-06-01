@@ -16,6 +16,10 @@ export const metadata = {
   applicationName: "Zaraz będę",
   icons: ["logo.png"],
   viewport: "width=device-width, initial-scale=1.0",
+  appleWebApp: {
+    title: "Zaraz będę",
+    statusBarStyle: "black-translucent",
+  },
   other: {
     appleMobileWebAppCapable: "yes",
     appleMobileWebAppStatusBarStyle: "black",
