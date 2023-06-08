@@ -41,6 +41,7 @@ export async function handleLike(key: Keys, value: Value) {
     cookies().set(key, JSON.stringify(liked), {
       expires: 4503599627370495,
       httpOnly: true,
+      secure: true,
     });
     return true;
   }
