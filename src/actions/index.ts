@@ -6,7 +6,11 @@ export async function changeTheme() {
   const Theme = cookieStore.get("theme")?.value;
   const newTheme = Theme === "dark" ? "light" : "dark";
   //@ts-ignore
-  cookieStore.set("theme", newTheme);
+  cookieStore.set("theme", newTheme, {
+    secure: true,
+    httpOnly: true,
+    path: "/",
+  });
 }
 
 export async function getTheme() {
@@ -32,7 +36,9 @@ export async function handleLike(key: Keys, value: Value) {
     // @ts-ignore
     cookies().set(key, JSON.stringify(liked), {
       expires: 4503599627370495,
+      secure: true,
       httpOnly: true,
+      path: "/",
     });
     return false;
   } else {
@@ -42,6 +48,7 @@ export async function handleLike(key: Keys, value: Value) {
       expires: 4503599627370495,
       httpOnly: true,
       secure: true,
+      path: "/",
     });
     return true;
   }
