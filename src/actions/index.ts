@@ -7,9 +7,7 @@ export async function changeTheme() {
   const newTheme = Theme === "dark" ? "light" : "dark";
   //@ts-ignore
   cookieStore.set("theme", newTheme, {
-    secure: true,
-    httpOnly: true,
-    path: "/",
+    domain: "zdurnieli.vercel.app",
   });
 }
 
@@ -45,10 +43,7 @@ export async function handleLike(key: Keys, value: Value) {
     liked.push(value);
     // @ts-ignore
     cookies().set(key, JSON.stringify(liked), {
-      expires: 4503599627370495,
-      httpOnly: true,
-      secure: true,
-      path: "/",
+      domain: "zdurnieli.vercel.app",
     });
     return true;
   }
