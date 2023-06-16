@@ -7,7 +7,7 @@ export async function changeTheme() {
   const newTheme = Theme === "dark" ? "light" : "dark";
   //@ts-ignore
   cookieStore.set("theme", newTheme, {
-    domain: "zdurnieli.vercel.app",
+    expires: 1000 * 60 * 60 * 24 * 5,
   });
 }
 
@@ -33,17 +33,14 @@ export async function handleLike(key: Keys, value: Value) {
     liked.splice(index, 1);
     // @ts-ignore
     cookies().set(key, JSON.stringify(liked), {
-      expires: 4503599627370495,
-      secure: true,
-      httpOnly: true,
-      path: "/",
+      expires: 1000 * 60 * 60 * 24 * 5,
     });
     return false;
   } else {
     liked.push(value);
     // @ts-ignore
     cookies().set(key, JSON.stringify(liked), {
-      domain: "zdurnieli.vercel.app",
+      expires: 1000 * 60 * 60 * 24 * 5,
     });
     return true;
   }
