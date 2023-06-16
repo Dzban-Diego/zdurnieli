@@ -3,6 +3,8 @@ import { CustomLink } from "@/components/CustomLink";
 import StopLiveTable from "@/components/StopLiveTable";
 import React, { Suspense } from "react";
 
+export const revalidate = 12
+
 async function Home() {
   const stops = await getLiked("stop");
   const lines = await getLiked("line");
