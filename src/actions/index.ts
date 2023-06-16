@@ -6,9 +6,10 @@ export async function changeTheme() {
   const Theme = cookieStore.get("theme")?.value;
   const newTheme = Theme === "dark" ? "light" : "dark";
   //@ts-ignore
-  cookieStore.set("theme", newTheme, {
-    expires: 1000 * 60 * 60 * 24 * 5,
-    domain: "zdurnieli.vercel.app",
+  cookieStore.set({
+    name: "theme",
+    value: newTheme,
+    expires: 432_000_000,
   });
 }
 
@@ -36,7 +37,6 @@ export async function handleLike(key: Keys, value: Value) {
     // @ts-ignore
     cookies().set(key, JSON.stringify(liked), {
       expires: 1000 * 60 * 60 * 24 * 5,
-      domain: "zdurnieli.vercel.app",
     });
     return false;
   } else {
@@ -44,7 +44,6 @@ export async function handleLike(key: Keys, value: Value) {
     // @ts-ignore
     cookies().set(key, JSON.stringify(liked), {
       expires: 1000 * 60 * 60 * 24 * 5,
-      domain: "zdurnieli.vercel.app",
     });
     return true;
   }
