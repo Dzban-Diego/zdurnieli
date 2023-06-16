@@ -1,9 +1,9 @@
 import { getLiked } from "@/actions";
 import { CustomLink } from "@/components/CustomLink";
 import StopLiveTable from "@/components/StopLiveTable";
-import React from "react";
+import React, { Suspense } from "react";
 
-async function Page() {
+async function Home() {
   const stops = await getLiked("stop");
   const lines = await getLiked("line");
 
@@ -48,5 +48,14 @@ async function Page() {
     </div>
   );
 }
+
+const Page = () => {
+  return (
+    <Suspense>
+      {/* @ts-ignore */}
+      <Home />
+    </Suspense>
+  );
+};
 
 export default Page;

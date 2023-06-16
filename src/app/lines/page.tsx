@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Suspense } from "react";
 import { CustomLink } from "../../components/CustomLink";
 import { Multiple } from "../../components/Multiple";
 import getLines from "@/actions/getLines";
@@ -43,7 +43,17 @@ const LinesList = ({ lines }: { lines: any[] }) => {
   );
 };
 
-export default Lines;
+
+const Page = () => {
+  return (
+    <Suspense>
+      {/* @ts-ignore */}
+      <Lines />
+    </Suspense>
+  );
+};
+
+export default Page;
 
 const Loader = () => {
   const instances = 64;

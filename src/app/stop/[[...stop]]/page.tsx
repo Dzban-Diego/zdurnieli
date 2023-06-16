@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Suspense } from "react";
 import StopLiveTable from "@/components/StopLiveTable";
 import getStopTable from "@/actions/getStopTable";
 
@@ -11,7 +11,17 @@ const Line = ({ params: { stop } }: { params: { stop: [string, string] } }) => {
     </div>
   );
 };
-export default Line;
+
+const Page = ({ params }: { params: { stop: [string, string] } }) => {
+  return (
+    <Suspense>
+      {/* @ts-ignore */}
+      <Line params={params} />
+    </Suspense>
+  );
+};
+
+export default Page;
 
 interface Props {
   query: { id: string; name: string };

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Suspense } from "react";
 import getLineStops from "@/actions/getLineStops";
 import LikeButton from "@/components/LikeButton";
 import { CustomLink } from "@/components/CustomLink";
@@ -38,7 +38,17 @@ const Line = async ({ params }: { params: { line: [string, string] } }) => {
     </>
   );
 };
-export default Line;
+
+const LinePage = ({ params }: { params: { line: [string, string] } }) => {
+  return (
+    <Suspense>
+      {/* @ts-ignore */}
+      <Line params={params} />
+    </Suspense>
+  );
+};
+
+export default LinePage;
 
 const Side = ({ stops }: { stops: { name: string; id: string }[] }) => {
   const valuesIds = ["1"];
