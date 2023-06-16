@@ -2,8 +2,9 @@ import { getLiked } from "@/actions";
 import { CustomLink } from "@/components/CustomLink";
 import StopLiveTable from "@/components/StopLiveTable";
 import React, { Suspense } from "react";
+import Loading from "./loading";
 
-export const revalidate = 12
+export const revalidate = 12;
 
 async function Home() {
   const stops = await getLiked("stop");
@@ -53,7 +54,7 @@ async function Home() {
 
 const Page = () => {
   return (
-    <Suspense>
+    <Suspense fallback={<Loading />}>
       {/* @ts-ignore */}
       <Home />
     </Suspense>
