@@ -12,7 +12,10 @@ export default async function getLines() {
     lines: { name: string; id: string }[];
   }[] = [];
   const h2Elements = mainElement?.querySelectorAll("h2");
-  const hidden = ["Zmiany w rozkładach jazdy", "Inne źródła rozkładów jazdy"];
+  const hidden = [
+    "Ostatnie zmiany w rozkładach jazdy",
+    "Inne źródła rozkładów jazdy",
+  ];
   h2Elements?.forEach((element) => {
     const header = element.innerHTML;
     if (hidden.includes(header)) {
@@ -23,16 +26,25 @@ export default async function getLines() {
       lines: [],
     });
   });
-  const ulElements = mainElement?.querySelectorAll("ul");
+  const ulElements = mainElement?.querySelectorAll(".row");
   ulElements?.forEach((element, index) => {
-    const c = categories[index];
+    const c = categories[index -1];
     const arr: { name: string; id: string }[] = [];
+
+    element.querySelectorAll(".visually-hidden").forEach((hidden) => {
+      hidden.remove();
+    });
+
     element.querySelectorAll("a").forEach((a) => {
+      const urlArray = a.href.split("/");
       arr.push({
-        name: a.innerHTML,
-        id: a.href.split(",").pop() || "",
+        name: a.text.trim(),
+        id: `${urlArray[urlArray.length -2]}/${urlArray[urlArray.length -1]}`,
       });
     });
+
+    console.log(arr)
+
     if (c) {
       c.lines = arr;
     }
