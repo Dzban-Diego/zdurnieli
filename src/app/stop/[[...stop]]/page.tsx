@@ -2,20 +2,30 @@ import React, { Suspense } from "react";
 import StopLiveTable from "@/components/StopLiveTable";
 import getStopTable from "@/actions/getStopTable";
 
-const Line = ({ params: { stop } }: { params: { stop: [string, string] } }) => {
+const Line = ({
+  params: { stop },
+}: {
+  params: { stop: [string, string, string, string] };
+}) => {
+  const lineId = stop[0];
+  const stopId = `${stop[0]}/${stop[1]}`;
+  const stopName = stop[2];
+
   return (
     <div className={"flex flex-col items-center text-center"}>
-      {/*@ts-ignore*/}
-      <StopLiveTable stopId={stop[0]} stopName={decodeURI(stop[1])} />
-      <BottomTable query={{ name: stop[1], id: stop[0] }} />
+      <StopLiveTable stopId={stopId} stopName={decodeURI(stopName)} />
+      {/* <BottomTable query={{ name: stopName, id: stopId, lineId}} />*/}
     </div>
   );
 };
 
-const Page = ({ params }: { params: { stop: [string, string] } }) => {
+const Page = ({
+  params,
+}: {
+  params: { stop: [string, string, string, string] };
+}) => {
   return (
     <Suspense>
-      {/* @ts-ignore */}
       <Line params={params} />
     </Suspense>
   );
@@ -24,12 +34,12 @@ const Page = ({ params }: { params: { stop: [string, string] } }) => {
 export default Page;
 
 interface Props {
-  query: { id: string; name: string };
+  query: { id: string; name: string; lineId: string };
 }
 
 //@ts-ignore
 const BottomTable: React.FC<Props> = async ({ query }) => {
-  const Table = await getStopTable(query.id);
+  const Table = await getStopTable(query.lineId, query.id);
 
   return (
     <>

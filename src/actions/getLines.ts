@@ -16,6 +16,7 @@ export default async function getLines() {
     "Ostatnie zmiany w rozkładach jazdy",
     "Inne źródła rozkładów jazdy",
   ];
+
   h2Elements?.forEach((element) => {
     const header = element.innerHTML;
     if (hidden.includes(header)) {

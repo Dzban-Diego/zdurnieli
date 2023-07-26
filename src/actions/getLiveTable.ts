@@ -1,44 +1,42 @@
 "use server";
-import { JSDOM } from "jsdom";
 
 async function getLiveTable(stopID: string) {
-  const response = await fetch(
-    `https://www.zditm.szczecin.pl/pl/pasazer/rozklady-jazdy,tabliczka,${stopID}`
+  console.log("stopId", stopID);
+
+  const stopsResponse = await fetch(
+    "https://www.zditm.szczecin.pl/api/v1/stops"
   );
-  const data = await response.text();
-  const string = data.match(/id="tablica_wrapper(\d{1,})"/g);
-  const id =
-    string
-      ?.toString()
-      .match(/\d{2,}/g)
-      ?.toString() || "";
-  const response_1 = await fetch(
-    `https://www.zditm.szczecin.pl/json/tablica.inc.php?lng=pl&slupek=${id}&t=${Math.random()}`
-  );
-  const data_1 = await response_1.text();
-  const returnData = JSON.parse(data_1) as {
-    tresc: string;
-    komunikat: string;
+
+  const stops = (await stopsResponse.json()) as {
+    data: { id: number; name: string; number: string }[];
   };
-  const trescHtml = new JSDOM(returnData.tresc);
-  const body = trescHtml.window.document.body;
-  const tbody = body.getElementsByTagName("tbody");
-  const trs = tbody[0].querySelectorAll("tr");
-  const tableData: {
-    line: string;
-    direction: string;
-    time: string;
-  }[] = [];
 
-  trs.forEach((tr) => {
-    tableData.push({
-      line: tr.children[0].textContent || "",
-      direction: tr.children[1].textContent || "",
-      time: tr.children[2].textContent || "",
-    })
-  });
+  const stopNumber = stops.data.find((stop) => stop.id.toString() === stopID);
 
-  return tableData;
+  if (!stopNumber) {
+    return [];
+  }
+
+  const response = await fetch(
+    `https://www.zditm.szczecin.pl/api/v1/displays/${stopNumber.number}`
+  );
+
+  const data = (await response.json()) as {
+    stop_name: string;
+    stop_number: string;
+    departures: {
+      line_number: string;
+      direction: string;
+      time_real: number | null;
+      time_scheduled: string | null;
+    }[];
+  };
+
+  return data.departures.map(departure => ({
+      line: departure.line_number,
+      direction: departure.direction,
+      time: departure.time_real ? `${departure.time_real} min` : departure.time_scheduled || "",
+  })).splice(0, 5);
 }
 
 export default getLiveTable;

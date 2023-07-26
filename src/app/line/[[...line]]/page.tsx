@@ -7,9 +7,10 @@ import { getLikeStatus, getTheme } from "@/actions";
 
 // 0 - id 1 - name
 const Line = async ({ params }: { params: { line: [string, string] } }) => {
-  const LineStops = await getLineStops(params.line[0]);
+  const lineId = `${params.line[0]}/${params.line[1]}`
+  const LineStops = await getLineStops(lineId);
   const Theme = await getTheme();
-  const isLiked = await getLikeStatus("line", params.line[0]);
+  const isLiked = await getLikeStatus("line", lineId);
 
   return (
     <>
@@ -17,7 +18,7 @@ const Line = async ({ params }: { params: { line: [string, string] } }) => {
         <LikeButton
           cookieKey={"line"}
           name={params.line[1]}
-          id={params.line[0]}
+          id={lineId}
           Theme={Theme}
           isLiked={isLiked}
         />

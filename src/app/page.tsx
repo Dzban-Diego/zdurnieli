@@ -37,7 +37,7 @@ async function Home() {
         {lines.map((line) => (
           <CustomLink
             key={line.id}
-            href={`line/${line.id}/${line.name}`}
+            href={`line/${line.id}`}
             text={line.name}
           />
         ))}

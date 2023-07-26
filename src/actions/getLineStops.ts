@@ -1,4 +1,4 @@
-'use server';
+"use server";
 import { JSDOM } from "jsdom";
 
 async function getLineStops(lineID: string) {
@@ -9,24 +9,19 @@ async function getLineStops(lineID: string) {
   const mainElement = dom.window.document.querySelector("main");
   const bodyElements = mainElement?.querySelectorAll("tbody");
   const data: { name: string; id: string }[][] = [];
-  bodyElements?.forEach((element, index) => {
-    if (index === 0) {
-      return;
-    }
+
+  bodyElements?.forEach((element) => {
     const arr: { name: string; id: string }[] = [];
-    const stopElements = element.querySelectorAll(".przystanek");
+    const stopElements = element.querySelectorAll("a");
     stopElements.forEach((stopEl) => {
-      const spans = stopEl.querySelectorAll("span");
-      const as = stopEl.querySelectorAll("a");
-      const lastA = as[as.length - 1];
-      const urlArray = lastA?.href.split(",");
-      const name = spans[spans.length - 1]?.textContent;
+      const name = stopEl.textContent?.trim();
+      const urlArray = stopEl.href.split("/");
       arr.push({
-        name: name || lastA?.textContent || "",
-        id: urlArray?.slice(Math.max(urlArray.length - 3, 0)).join(",") || "",
+        name: name || "",
+        id: `${urlArray[urlArray.length - 4]}/${urlArray[urlArray.length - 3]}`,
       });
     });
-    data.push(arr);
+    data.push(arr.filter((el) => el.name !== ""));
   });
   return data;
 }

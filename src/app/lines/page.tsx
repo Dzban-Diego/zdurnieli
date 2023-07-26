@@ -36,7 +36,7 @@ const LinesList = ({ lines }: { lines: any[] }) => {
           key={line.id}
           text={line.name}
           selected={false}
-          href={`line/${line.id}/${line.name}`}
+          href={`line/${line.id}`}
         />
       ))}
     </div>
