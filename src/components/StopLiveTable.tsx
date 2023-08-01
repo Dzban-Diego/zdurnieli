@@ -50,11 +50,11 @@ const StopLiveTable: React.FC<Props> = async ({
         {LineTable.map((line, index) => (
           <div
             key={index}
-            className={"text-orange p-3 text-xl font-bold flex justify-between"}
+            className={"text-black dark:text-neutral-400 p-3 text-xl font-bold flex justify-between"}
           >
-            <span className="w-1/12">{line.line}</span>
-            <span className="w-8/12">{line.direction}</span>
-            <span className="w-1/12">{line.time}</span>
+            <span>{line.line}</span>
+            <span>{line.direction}</span>
+            <span>{line.time}</span>
           </div>
         ))}
       </div>
