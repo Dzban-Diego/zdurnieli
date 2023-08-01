@@ -36,14 +36,14 @@ export async function handleLike(key: Keys, value: Value) {
     cookies().set(key, JSON.stringify(liked), {
       expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 5),
     });
-    return false;
+    return cookies().get(key)?.value
   } else {
     liked.push(value);
     // @ts-ignore
     cookies().set(key, JSON.stringify(liked), {
       expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 5),
     });
-    return true;
+    return cookies().get(key)?.value
   }
 }
 
@@ -58,4 +58,16 @@ export async function getLiked(key: Keys) {
   const likedString = cookies().get(key)?.value || "[]";
   const liked = JSON.parse(likedString) as Value[];
   return liked;
+}
+
+export async function checkCookiesExistance(key: Keys) {
+  const data = cookies().get(key)?.value;
+  return data !== undefined;
+}
+
+export async function setCookies(key: Keys | "theme", value: Value[] | string) {
+  // @ts-ignore
+  cookies().set(key, value, {
+    expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 5),
+  });
 }

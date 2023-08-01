@@ -20,8 +20,9 @@ const LikeButton: React.FC<LikeButtonProps> = async ({
   name,
   cookieKey,
 }) => {
-  function toggleLike() {
-    handleLike(cookieKey, { id, name });
+  async function toggleLike() {
+    const data = await handleLike(cookieKey, { id, name });
+    localStorage.setItem(cookieKey, data);
   }
 
   return (
