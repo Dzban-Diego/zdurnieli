@@ -4,6 +4,7 @@ import { TbArrowsVertical } from "react-icons/tb";
 import Link from "next/link";
 import { ReactDOMAttributes } from "@use-gesture/react/dist/declarations/src/types";
 import getLiveTable from "@/actions/getLiveTable";
+import StopCard from "@/components/StopCard";
 import { getLikeStatus, getTheme } from "@/actions";
 
 type Props = {
@@ -48,14 +49,7 @@ const StopLiveTable: React.FC<Props> = async ({
       </div>
       <div className="bg-white dark:bg-black w-full rounded shadow">
         {LineTable.map((line, index) => (
-          <div
-            key={index}
-            className={"text-black dark:text-neutral-400 p-3 text-xl font-bold flex justify-between"}
-          >
-            <span>{line.line}</span>
-            <span>{line.direction}</span>
-            <span>{line.time}</span>
-          </div>
+          <StopCard key={index} {...line} />
         ))}
       </div>
     </>
