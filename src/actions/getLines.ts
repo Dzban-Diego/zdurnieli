@@ -44,8 +44,6 @@ export default async function getLines() {
       });
     });
 
-    console.log(arr)
-
     if (c) {
       c.lines = arr;
     }

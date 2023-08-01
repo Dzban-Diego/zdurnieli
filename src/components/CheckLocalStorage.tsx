@@ -9,7 +9,6 @@ type Props = {
 };
 
 function CheckLocalStorage(props: Props) {
-  console.log("CheckLocalStorage", props);
   useEffect(() => {
     const theme = unpacData<string>(localStorage.getItem("theme"));
     const stop = unpacData<{ name: string; id: string }[]>(

@@ -1,8 +1,6 @@
 "use server";
 
 async function getLiveTable(stopID: string) {
-  console.log("stopId", stopID);
-
   const stopsResponse = await fetch(
     "https://www.zditm.szczecin.pl/api/v1/stops"
   );

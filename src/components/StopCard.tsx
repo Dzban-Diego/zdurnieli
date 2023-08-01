@@ -1,5 +1,5 @@
 "use client";
-import { useRouter } from 'next/navigation'
+import { useRouter } from "next/navigation";
 
 type Props = {
   line: string;
@@ -19,7 +19,9 @@ function StopCard({ line, direction, time }: Props) {
     >
       <span>{line}</span>
       <span>{direction}</span>
-      <span>{time}</span>
+      <span className={time === "" ? "animate-pulse" : ""}>
+        {time || ">>>"}
+      </span>
     </div>
   );
 }

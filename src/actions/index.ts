@@ -27,7 +27,6 @@ export async function handleLike(key: Keys, value: Value) {
   const cookieStore = cookies();
   const likedString = cookieStore.get(key)?.value || "[]";
   const liked = JSON.parse(likedString) as Value[];
-  console.log(liked);
 
   const index = liked.findIndex((item) => item.id === value.id);
   if (index !== -1) {
