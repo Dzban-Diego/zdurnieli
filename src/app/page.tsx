@@ -12,6 +12,7 @@ async function Home() {
   const lines = await getLiked("line");
   const theme = await getTheme();
 
+  // push
   return (
     <div className="flex flex-col p-2">
       <CheckLocalStorage theme={!!theme} line={!!lines} stop={!!stops} />
