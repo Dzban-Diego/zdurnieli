@@ -23,13 +23,13 @@ export default async function getLines() {
       return;
     }
     categories.push({
-      header,
+      header: header.trim(),
       lines: [],
     });
   });
   const ulElements = mainElement?.querySelectorAll(".row");
   ulElements?.forEach((element, index) => {
-    const c = categories[index -1];
+    const c = categories[index - 1];
     const arr: { name: string; id: string }[] = [];
 
     element.querySelectorAll(".visually-hidden").forEach((hidden) => {
@@ -40,7 +40,7 @@ export default async function getLines() {
       const urlArray = a.href.split("/");
       arr.push({
         name: a.text.trim(),
-        id: `${urlArray[urlArray.length -2]}/${urlArray[urlArray.length -1]}`,
+        id: `${urlArray[urlArray.length - 2]}/${urlArray[urlArray.length - 1]}`,
       });
     });
 

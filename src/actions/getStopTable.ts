@@ -15,6 +15,7 @@ async function getStopTable(lineId: string, stopID: string) {
     .replaceAll("Godzina", "")
     .replaceAll(/<td>\n.{1,}<\/td>/g, "<td class='nowrap'>--</td>")
     .replaceAll(/href="/g, 'href="https://www.zditm.szczecin.pl/');
+  console.log(returnData)
   return returnData || "";
 }
 
