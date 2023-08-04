@@ -11,7 +11,7 @@ async function getStopTable(
   stopId: string
 ): Promise<ReturnType> {
   const html = await fetch(
-    `https://www.zditm.szczecin.pl/pl/pasazer/rozklady-jazdy/tabliczka/${lineId}/${stopId}/p/75-dworzec-glowny`
+    `https://www.zditm.szczecin.pl/pl/pasazer/rozklady-jazdy/tabliczka/${lineId}/${stopId}/p`
   ).then((res) => {
     return res.text();
   });
@@ -33,7 +33,7 @@ async function getStopTable(
         if (spanText === "" || span.innerHTML.length > 5) {
           return;
         }
-        if (parseInt(spanText, 10)) {
+        if (Number.isInteger(parseInt(spanText, 10))) {
           console.log(typeof parseInt(spanText));
           data[index].departures[aIndex] = {
             minute: parseInt(spanText),
@@ -41,11 +41,14 @@ async function getStopTable(
             url: a.href,
           };
         } else {
+          console.log("else", spanText);
           data[index].departures[aIndex].route = spanText;
         }
       });
     });
   });
+
+  console.log(data);
 
   return data || "";
 }

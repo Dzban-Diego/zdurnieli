@@ -2,14 +2,18 @@
 @tailwind components;
 @tailwind utilities;
 
-thead tr th {
-    background-color: black;
-    color: white;
+.routeb {
+    color: red;
 }
 
-tbody tr td {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    background-color: #ff00ff;
+.routec {
+    color: green;
+}
+
+.routed {
+    color: magenta;
+}
+
+.routee {
+    color: blue;
 }

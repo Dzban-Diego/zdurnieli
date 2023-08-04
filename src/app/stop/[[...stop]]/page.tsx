@@ -8,13 +8,16 @@ const Line = ({
   params: { stop: [string, string, string, string] };
 }) => {
   const lineId = stop[0];
-  const stopId = `${stop[0]}/${stop[1]}`;
+  const stopId = stop[1];
   const stopName = stop[2];
 
   return (
     <div className={"flex flex-col items-center text-center"}>
-      <StopLiveTable stopId={stopId} stopName={decodeURI(stopName)} />
-      {/* <BottomTable query={{ name: stopName, id: stopId, lineId}} />*/}
+      <StopLiveTable
+        stopId={`${lineId}/${stopId}`}
+        stopName={decodeURI(stopName)}
+      />
+      <BottomTable stopId={stopId} lineId={lineId} />
     </div>
   );
 };
@@ -34,26 +37,45 @@ const Page = ({
 export default Page;
 
 interface Props {
-  query: { id: string; name: string; lineId: string };
+  stopId: string;
+  lineId: string;
 }
 
 //@ts-ignore
-const BottomTable: React.FC<Props> = async ({ query }) => {
-  const Table = await getStopTable(query.lineId, query.id);
+const BottomTable: React.FC<Props> = async ({ lineId, stopId }) => {
+  const TableData = await getStopTable(lineId, stopId);
 
   return (
     <>
       <h2 className={"my-3 text-4xl text-textColor dark:text-dark_textColor"}>
         Rozkład jazdy
       </h2>
-      {Table ? (
-        <div
-          className={
-            "flex w-full flex-col justify-center overflow-x-scroll text-xl text-orange"
-          }
-          dangerouslySetInnerHTML={{ __html: Table || "" }}
-        />
-      ) : null}
+      <table className="bg-white rounded shadow w-full overflow-hidden">
+        <tbody>
+          {TableData.map((item) => {
+            return (
+              <tr key={item.hour}>
+                <th className="bg-black text-white p-1">{item.hour}</th>
+                {item.departures.map((departure) => {
+                  return (
+                    <td
+                      key={departure.minute}
+                      className={`route${departure.route}`}
+                    >
+                      <a href={departure.url}>
+                        <span>{departure.minute}</span>
+                        <span className="align-top text-xs">
+                          {departure.route}
+                        </span>
+                      </a>
+                    </td>
+                  );
+                })}
+              </tr>
+            );
+          })}
+        </tbody>
+      </table>
     </>
   );
 };
