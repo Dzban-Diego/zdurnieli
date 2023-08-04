@@ -1,6 +1,7 @@
 "use client";
 import { setCookies } from "@/actions";
 import { GoArrowDown, GoArrowUp } from "react-icons/go";
+import { useAutoAnimate } from "@formkit/auto-animate/react";
 
 type Props = {
   list: {
@@ -11,6 +12,9 @@ type Props = {
 };
 
 function SettingsList({ list, cookieKey }: Props) {
+  const [listRef] = useAutoAnimate({
+    duration: 200,
+  });
   function moveUp(index: number) {
     const newList = [...list];
     const item = newList[index];
@@ -33,13 +37,12 @@ function SettingsList({ list, cookieKey }: Props) {
     }
     newList[index] = prevItem;
     newList[index + 1] = item;
-    console.log(newList);
     setCookies(cookieKey, JSON.stringify(newList));
     localStorage.setItem(cookieKey, JSON.stringify(newList));
   }
 
   return (
-    <>
+    <div ref={listRef}>
       {list.map((stop, index) => (
         <Item
           key={stop.id}
@@ -49,7 +52,7 @@ function SettingsList({ list, cookieKey }: Props) {
           moveDown={moveDown}
         />
       ))}
-    </>
+    </div>
   );
 }
 
