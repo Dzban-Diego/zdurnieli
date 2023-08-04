@@ -54,8 +54,9 @@ async function getStopTable(
   });
 
   let isCurrentDeparture = false;
-  const hour = dayjs().format("HH");
-  const minute = dayjs().format("mm");
+  require("dayjs/locale/pl");
+  const hour = dayjs().locale('pl').format("HH");
+  const minute = dayjs().locale('pl').format("mm");
 
   return data.map((table) => {
     table.departures = table.departures.map((departure) => {
