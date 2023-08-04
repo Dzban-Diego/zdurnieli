@@ -1,10 +1,15 @@
 "use server";
 import { JSDOM } from "jsdom";
 
+type ReturnType = {
+  hour: string;
+  departures: { minute: number; route: string; url: string }[];
+}[];
+
 async function getStopTable(
   lineId: string,
   stopId: string
-): Promise<{ hour: string; departures: string[] }[]> {
+): Promise<ReturnType> {
   const html = await fetch(
     `https://www.zditm.szczecin.pl/pl/pasazer/rozklady-jazdy/tabliczka/${lineId}/${stopId}/p/75-dworzec-glowny`
   ).then((res) => {
@@ -13,7 +18,7 @@ async function getStopTable(
   const dom = new JSDOM(html);
   const mainElement = dom.window.document.querySelector("main");
   const table = mainElement?.querySelector(".table-responsive");
-  let data: { hour: string; departures: string[] }[] = [];
+  let data: ReturnType = [];
 
   table?.querySelectorAll("th").forEach((th, index) => {
     data[index] = { hour: th.innerHTML?.trim(), departures: [] };
@@ -21,13 +26,23 @@ async function getStopTable(
 
   table?.querySelectorAll("td").forEach((td, index) => {
     const as = td.querySelectorAll("a");
-    as.forEach((a) => {
+    as.forEach((a, aIndex) => {
       const spans = a.querySelectorAll("span");
       spans.forEach((span) => {
-        if (span.innerHTML === "" || span.innerHTML.length > 5) {
+        const spanText = span.innerHTML?.trim();
+        if (spanText === "" || span.innerHTML.length > 5) {
           return;
         }
-        data[index].departures.push(span.innerHTML?.trim() || "");
+        if (parseInt(spanText, 10)) {
+          console.log(typeof parseInt(spanText));
+          data[index].departures[aIndex] = {
+            minute: parseInt(spanText),
+            route: "",
+            url: a.href,
+          };
+        } else {
+          data[index].departures[aIndex].route = spanText;
+        }
       });
     });
   });
