@@ -3,6 +3,7 @@ import Footer from "@/components/Footer";
 import ChangeThemeButton from "@/components/ChangeThemeButton";
 import { cookies } from "next/headers";
 import Link from "next/link";
+import { RiSettings4Fill } from "react-icons/ri";
 
 type Props = {
   children: React.ReactNode;
@@ -44,7 +45,15 @@ const MyApp: React.FC<Props> = ({ children }) => {
               Zaraz będę
             </h1>
           </Link>
-          <ChangeThemeButton theme={theme} />
+          <div className="flex flex-row items-center">
+            <Link href={"/settings"} className="p-4">
+              <RiSettings4Fill
+                size={35}
+                color={theme === "dark" ? "white" : "black"}
+              />
+            </Link>
+            <ChangeThemeButton theme={theme} />
+          </div>
         </header>
         <main
           className={"m-3 bg-background min-h-screen dark:bg-dark_background"}

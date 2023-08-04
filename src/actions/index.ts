@@ -65,6 +65,7 @@ export async function checkCookiesExistance(key: Keys) {
 }
 
 export async function setCookies(key: Keys | "theme", value: Value[] | string) {
+  console.log(key, value)
   // @ts-ignore
   cookies().set(key, value, {
     expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 5),
