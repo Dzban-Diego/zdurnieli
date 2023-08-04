@@ -60,7 +60,11 @@ const BottomTable: React.FC<Props> = async ({ lineId, stopId }) => {
                   return (
                     <td
                       key={departure.minute}
-                      className={`route${departure.route}`}
+                      className={`route${departure.route} ${
+                        departure.current
+                          ? "border-2 border-green-500 rounded"
+                          : ""
+                      }`}
                     >
                       <a href={departure.url}>
                         <span>{departure.minute}</span>

@@ -1,9 +1,15 @@
 "use server";
+import dayjs from "dayjs";
 import { JSDOM } from "jsdom";
 
 type ReturnType = {
   hour: string;
-  departures: { minute: number; route: string; url: string }[];
+  departures: {
+    minute: number;
+    route: string;
+    url: string;
+    current: boolean;
+  }[];
 }[];
 
 async function getStopTable(
@@ -34,23 +40,41 @@ async function getStopTable(
           return;
         }
         if (Number.isInteger(parseInt(spanText, 10))) {
-          console.log(typeof parseInt(spanText));
           data[index].departures[aIndex] = {
             minute: parseInt(spanText),
             route: "",
             url: a.href,
+            current: false,
           };
         } else {
-          console.log("else", spanText);
           data[index].departures[aIndex].route = spanText;
         }
       });
     });
   });
 
-  console.log(data);
+  let isCurrentDeparture = false;
+  const hour = dayjs().format("HH");
+  const minute = dayjs().format("mm");
 
-  return data || "";
+  return data.map((table) => {
+    table.departures = table.departures.map((departure) => {
+      const isHourFuture = parseInt(table.hour) > parseInt(hour);
+      const isHourNow = parseInt(table.hour) === parseInt(hour);
+      const isMinuteFuture = departure.minute > parseInt(minute);
+      const isFuture = isHourFuture || (isHourNow && isMinuteFuture);
+
+      if (isFuture && !isCurrentDeparture) {
+        isCurrentDeparture = true;
+        departure.current = true;
+        return departure;
+      } else {
+        return departure;
+      }
+    });
+
+    return table;
+  });
 }
 
 export default getStopTable;
