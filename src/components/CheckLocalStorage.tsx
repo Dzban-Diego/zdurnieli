@@ -18,6 +18,20 @@ function CheckLocalStorage(props: Props) {
       localStorage.getItem("line")
     );
 
+    const stopfirst = stop?.[0].id
+    if (stopfirst) {
+      const isStopOld = stopfirst.split('').includes('/')
+
+      if (isStopOld) {
+        localStorage.removeItem("stop");
+        setCookies("stop", JSON.stringify([]));
+
+        alert('Przepraszamy twoje ulubione przystanki musiały zostać zresetowane :(')
+
+        return
+      }
+    }
+
     if (props.theme && theme) {
       setCookies("theme", JSON.stringify(theme));
     }
