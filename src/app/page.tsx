@@ -37,7 +37,7 @@ async function Home() {
       </h2>
       <div className={"grid grid-cols-4"}>
         {lines.map((line) => (
-          <CustomLink key={line.id} href={`line/${line.id}`} text={line.name} />
+          <CustomLink key={line.id} href={`line/${line.id}/${line.name}`} text={line.name} />
         ))}
       </div>
       {stops?.length === 0 && lines?.length === 0 ? (

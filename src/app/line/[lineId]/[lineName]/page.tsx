@@ -4,11 +4,10 @@ import LikeButton from "@/components/LikeButton";
 import { CustomLink } from "@/components/CustomLink";
 import { getLikeStatus, getTheme } from "@/actions";
 
-type Params = { params: { line: [string, string] } };
+type Params = { params: { lineId: string; lineName: string } };
 
 // @ts-ignore
-const Line: React.FC<Params> = async ({ params }) => {
-  const lineId = `${params.line[0]}/${params.line[1]}`;
+const LinePage: React.FC<Params> = async ({ params: { lineId, lineName } }) => {
   const LineStops = await getLineStops(lineId);
   const Theme = await getTheme();
   const isLiked = await getLikeStatus("line", lineId);
@@ -18,13 +17,13 @@ const Line: React.FC<Params> = async ({ params }) => {
       <div className={"flex"}>
         <LikeButton
           cookieKey={"line"}
-          name={params.line[1]}
+          name={lineName}
           id={lineId}
           Theme={Theme}
           isLiked={isLiked}
         />
         <h1 className={"p-4 text-4xl dark:text-dark_textColor text-textColor"}>
-          Linia {params.line[1]}
+          Linia {lineName}
         </h1>
       </div>
 
@@ -35,10 +34,6 @@ const Line: React.FC<Params> = async ({ params }) => {
       </div>
     </>
   );
-};
-
-const LinePage = ({ params }: { params: { line: [string, string] } }) => {
-  return <Line params={params} />;
 };
 
 export default LinePage;

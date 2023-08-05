@@ -40,7 +40,7 @@ export default async function getLines() {
       const urlArray = a.href.split("/");
       arr.push({
         name: a.text.trim(),
-        id: `${urlArray[urlArray.length - 2]}/${urlArray[urlArray.length - 1]}`,
+        id: `${urlArray[urlArray.length - 2]}-${urlArray[urlArray.length - 1]}/${a.text.trim()}`,
       });
     });
 
