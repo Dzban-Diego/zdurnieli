@@ -29,7 +29,8 @@ export async function handleLike(key: Keys, value: Value) {
   const likedString = cookieStore.get(key)?.value || "[]";
   const liked = JSON.parse(likedString) as Value[];
 
-  const index = liked.findIndex((item) => item.id === value.id);
+  const index = liked.findIndex((item) => item.id.replaceAll('/', '-') === value.id);
+
   if (index !== -1) {
     liked.splice(index, 1);
     // @ts-ignore
@@ -51,13 +52,16 @@ export async function getLikeStatus(key: Keys, id: string) {
   const likedString = cookies().get(key)?.value || "[]";
   const liked = JSON.parse(likedString) as Value[];
 
-  return liked.findIndex((item) => item.id === id) !== -1;
+  return liked.findIndex((item) => item.id.replaceAll('/', '-') === id) !== -1;
 }
 
 export async function getLiked(key: Keys) {
   const likedString = cookies().get(key)?.value || "[]";
   const liked = JSON.parse(likedString) as Value[];
-  return liked;
+  return liked.map((item) => ({
+    ...item,
+    id: item.id.replaceAll('/', '-')
+  }));
 }
 
 export async function checkCookiesExistance(key: Keys) {
