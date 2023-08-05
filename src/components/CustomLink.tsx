@@ -7,6 +7,7 @@ interface Props {
   selected?: boolean;
   icon?: React.ReactNode;
   color?: string;
+  className?: string;
 }
 export const CustomLink: React.FC<Props> = ({
   href,
@@ -14,11 +15,12 @@ export const CustomLink: React.FC<Props> = ({
   color,
   selected,
   icon,
+  className,
 }) => {
   return (
     <Link
       href={href}
-      className={`m-1 rounded-md p-3 text-xl shadow-md ${
+      className={`m-1 rounded-md p-3 text-xl shadow-md ${className} ${
         selected
           ? `bg-liked text-black`
           : `${color ? color : "bg-white dark:bg-black"} text-black dark:text-white`

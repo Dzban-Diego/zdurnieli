@@ -18,7 +18,7 @@ function CheckLocalStorage(props: Props) {
       localStorage.getItem("line")
     );
 
-    const stopfirst = stop?.[0].id
+    const stopfirst = stop?.[0]?.id
     if (stopfirst) {
       const isStopOld = stopfirst.split('').includes('/')
 

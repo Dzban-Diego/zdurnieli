@@ -6,53 +6,57 @@ import React from "react";
 
 export const revalidate = 12;
 
-async function Home() {
+export default async function Home() {
   const stops = await getLiked("stop");
   const lines = await getLiked("line");
   const theme = await getTheme();
 
+  const isLines = lines?.length !== 0;
+  const isStops = stops?.length !== 0;
+
   return (
     <div className="flex flex-col p-2">
       <CheckLocalStorage theme={!!theme} line={!!lines} stop={!!stops} />
-      <h2
-        className={
-          "flex justify-center text-3xl text-textColor dark:text-dark_textColor"
-        }
-      >
-        Ulubione przystanki
-      </h2>
-      {stops.map((stop) => (
-        <StopLiveTable
-          key={stop.id}
-          stopId={stop.id || ""}
-          stopName={stop.name || ""}
-        />
-      ))}
-      <h2
-        className={
-          "my-3 flex justify-center text-3xl text-textColor dark:text-dark_textColor"
-        }
-      >
-        Ulubione Linie
-      </h2>
-      <div className={"grid grid-cols-4"}>
-        {lines.map((line) => (
-          <CustomLink key={line.id} href={`line/${line.id}/${line.name}`} text={line.name} />
-        ))}
-      </div>
-      {stops?.length === 0 && lines?.length === 0 ? (
-        <span className={"mb-4 text-xl text-textColor"}>
+      {!isLines && !isStops ? (
+        <span className={"mb-4 text-xl text-textColor text-center"}>
           Twoje ulubione przystanki i linie będą się tutaj wyświetlać, dodaj je!
         </span>
       ) : null}
-      <CustomLink href={"/lines"} text={"Wszystkie linie"} />
+      {isStops ? (
+        <h2
+          className={
+            "flex justify-center text-3xl text-textColor dark:text-dark_textColor"
+          }
+        >
+          Ulubione przystanki
+        </h2>
+      ) : null}
+      {stops.map((stop) => (
+        <StopLiveTable
+          key={stop.id}
+          stopId={stop.id}
+          stopName={stop.name}
+        />
+      ))}
+      {isLines ? (
+        <h2
+          className={
+            "my-3 flex justify-center text-3xl text-textColor dark:text-dark_textColor"
+          }
+        >
+          Ulubione Linie
+        </h2>
+      ) : null}
+      <div className={"grid grid-cols-4"}>
+        {lines.map((line) => (
+          <CustomLink
+            key={line.id}
+            href={`line/${line.id}/${line.name}`}
+            text={line.name}
+          />
+        ))}
+      </div>
+      <CustomLink href={"/lines"} text={"Wszystkie linie"} className="mt-4 m-0" />
     </div>
   );
 }
-
-const Page = () => {
-  {/* @ts-ignore */}
-  return <Home />;
-};
-
-export default Page;
