@@ -13,6 +13,9 @@ type ReturnType = {
 }[];
 
 async function getStopTable(stopId: string): Promise<ReturnType> {
+  require("dayjs/locale/pl");
+  dayjs.locale("pl");
+
   const html = await fetch(
     `https://www.zditm.szczecin.pl/pl/pasazer/rozklady-jazdy/tabliczka/${stopId.replaceAll(
       "-",
@@ -55,7 +58,6 @@ async function getStopTable(stopId: string): Promise<ReturnType> {
   });
 
   let isCurrentDeparture = false;
-  require("dayjs/locale/pl");
   const hour = dayjs().locale("pl").format("HH");
   const minute = dayjs().locale("pl").format("mm");
 
