@@ -2,9 +2,6 @@
 import dayjs from "dayjs";
 
 async function getLiveTable(stopId: string) {
-  require("dayjs/locale/pl");
-  dayjs.locale("pl");
-
   const stopsResponse = await fetch(
     "https://www.zditm.szczecin.pl/api/v1/stops"
   );
@@ -19,7 +16,7 @@ async function getLiveTable(stopId: string) {
 
   if (!stopNumber) {
     return {
-      time: dayjs().locale("pl").format("HH:mm:ss"),
+      time: dayjs().add(2, 'hour').format("HH:mm:ss"),
       data: [],
     };
   }
@@ -41,7 +38,7 @@ async function getLiveTable(stopId: string) {
   };
 
   return {
-    time: dayjs().locale("pl").format("HH:mm:ss"),
+    time: dayjs().add(2, 'hour').format("HH:mm:ss"),
     data: data.departures
       .map((departure) => ({
         line: departure.line_number,
