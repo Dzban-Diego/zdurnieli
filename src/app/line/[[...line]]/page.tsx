@@ -51,7 +51,7 @@ const LinePage = ({ params }: { params: { line: [string, string] } }) => {
 
 export default LinePage;
 
-const Side = ({ stops }: { stops: { name: string; id: string }[] }) => {
+const Side = ({ stops }: { stops: { name: string; id: string, routeLetter: string }[] }) => {
   const valuesIds = ["1"];
 
   return (
@@ -61,7 +61,7 @@ const Side = ({ stops }: { stops: { name: string; id: string }[] }) => {
           key={stop.id}
           text={stop.name}
           selected={valuesIds.includes(stop.id)}
-          href={`/stop/${stop.id}/${stop.name}`}
+          href={`/stop/${stop.id}/${stop.routeLetter}/${stop.name}`}
         />
       ))}
     </div>

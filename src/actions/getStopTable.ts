@@ -14,10 +14,15 @@ type ReturnType = {
 
 async function getStopTable(
   lineId: string,
-  stopId: string
+  stopId: string,
+  stopLetter: string
 ): Promise<ReturnType> {
+  console.log("get", lineId, stopId);
+  console.log(
+    `https://www.zditm.szczecin.pl/pl/pasazer/rozklady-jazdy/tabliczka/${lineId}/${stopId}/${stopLetter}`
+  );
   const html = await fetch(
-    `https://www.zditm.szczecin.pl/pl/pasazer/rozklady-jazdy/tabliczka/${lineId}/${stopId}/p`
+    `https://www.zditm.szczecin.pl/pl/pasazer/rozklady-jazdy/tabliczka/${lineId}/${stopId}/${stopLetter}`
   ).then((res) => {
     return res.text();
   });
@@ -55,9 +60,10 @@ async function getStopTable(
 
   let isCurrentDeparture = false;
   require("dayjs/locale/pl");
-  const hour = dayjs().locale('pl').format("HH");
-  const minute = dayjs().locale('pl').format("mm");
+  const hour = dayjs().locale("pl").format("HH");
+  const minute = dayjs().locale("pl").format("mm");
 
+  console.log("data1", data);
   return data.map((table) => {
     table.departures = table.departures.map((departure) => {
       const isHourFuture = parseInt(table.hour) > parseInt(hour);
@@ -74,6 +80,7 @@ async function getStopTable(
       }
     });
 
+    console.log("data", table);
     return table;
   });
 }
