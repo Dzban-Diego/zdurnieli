@@ -1,4 +1,3 @@
-"use server";
 import { getLiked } from "@/actions";
 import SettingsList from "@/components/SettingsList";
 

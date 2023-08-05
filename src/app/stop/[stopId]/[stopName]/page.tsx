@@ -4,34 +4,33 @@ import getStopTable from "@/actions/getStopTable";
 
 export const revalidate = 12;
 
-const Stop = ({
-  params: { stopId, stopName },
-}: {
+type Props = {
   params: { stopName: string; stopId: string };
-}) => {
+};
+
+export default function Stop({ params: { stopId, stopName } }: Props) {
   return (
     <div className={"flex flex-col items-center text-center"}>
       <StopLiveTable stopId={stopId} stopName={decodeURI(stopName)} />
+      {/* @ts-ignore */}
       <BottomTable stopId={stopId} />
     </div>
   );
-};
-
-export default Stop;
-
-type Props = {
-  stopId: string;
 }
 
-//@ts-ignore
-const BottomTable: React.FC<Props> = async ({ stopId }) => {
+async function BottomTable({ stopId }: { stopId: string }) {
   const TableData = await getStopTable(stopId);
 
   return (
     <>
       <h2 className={"my-3 text-4xl text-textColor dark:text-dark_textColor"}>
-        <a href={`https://www.zditm.szczecin.pl/pl/pasazer/rozklady-jazdy/tabliczka/${stopId.replaceAll('-', '/')}`}>
-        Rozkład jazdy
+        <a
+          href={`https://www.zditm.szczecin.pl/pl/pasazer/rozklady-jazdy/tabliczka/${stopId.replaceAll(
+            "-",
+            "/"
+          )}`}
+        >
+          Rozkład jazdy
         </a>
       </h2>
       <table className="bg-white  dark:bg-[#191a1e] secondary rounded shadow w-full overflow-hidden">
@@ -68,4 +67,4 @@ const BottomTable: React.FC<Props> = async ({ stopId }) => {
       </table>
     </>
   );
-};
+}

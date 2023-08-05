@@ -4,10 +4,7 @@ import ChangeThemeButton from "@/components/ChangeThemeButton";
 import { cookies } from "next/headers";
 import Link from "next/link";
 import { RiSettings4Fill } from "react-icons/ri";
-
-type Props = {
-  children: React.ReactNode;
-};
+import { PropsWithChildren } from "react";
 
 export const metadata = {
   title: "Zaraz będę",
@@ -27,7 +24,7 @@ export const metadata = {
   },
 };
 
-const MyApp: React.FC<Props> = ({ children }) => {
+export default function MyApp({ children }: PropsWithChildren) {
   const cookieStore = cookies();
   const theme = cookieStore.get("theme")?.value === "dark" ? "dark" : "light";
 
@@ -63,6 +60,4 @@ const MyApp: React.FC<Props> = ({ children }) => {
       </body>
     </html>
   );
-};
-
-export default MyApp;
+}

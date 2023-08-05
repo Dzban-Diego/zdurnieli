@@ -34,13 +34,12 @@ const Lines: React.FC = async () => {
   );
 };
 
-const LinesList = ({
-  lines,
-  likedLinesIds,
-}: {
+type LinesListProps = {
   lines: { name: string; id: string }[];
   likedLinesIds: string[];
-}) => {
+};
+
+function LinesList({ lines, likedLinesIds }: LinesListProps) {
   return (
     <div className={"grid grid-cols-4"}>
       {lines.map((line) => (
@@ -53,6 +52,6 @@ const LinesList = ({
       ))}
     </div>
   );
-};
+}
 
 export default Lines;
