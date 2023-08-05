@@ -12,10 +12,9 @@ type Props = {
 export const metadata = {
   title: "Zaraz będę",
   description: "Zaraz będę",
-  manifest: "/manifest.json",
   themeColor: "#000",
   applicationName: "Zaraz będę",
-  icons: ["logo.png"],
+  icons: ["app-icon.png"],
   viewport: "width=device-width, initial-scale=1.0",
   appleWebApp: {
     title: "Zaraz będę",
