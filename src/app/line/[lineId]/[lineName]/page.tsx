@@ -2,7 +2,7 @@ import React from "react";
 import getLineStops from "@/actions/getLineStops";
 import LikeButton from "@/components/LikeButton";
 import { CustomLink } from "@/components/CustomLink";
-import { getLikeStatus, getTheme } from "@/actions";
+import { getLikeStatus, getTheme, getLiked } from "@/actions";
 
 type Params = { params: { lineId: string; lineName: string } };
 
@@ -11,6 +11,7 @@ const LinePage: React.FC<Params> = async ({ params: { lineId, lineName } }) => {
   const LineStops = await getLineStops(lineId);
   const Theme = await getTheme();
   const isLiked = await getLikeStatus("line", lineId);
+  const LikedStops = await getLiked("stop");
 
   return (
     <>
@@ -29,7 +30,11 @@ const LinePage: React.FC<Params> = async ({ params: { lineId, lineName } }) => {
 
       <div className={"grid grid-cols-2"}>
         {LineStops.map((stops, index) => (
-          <Side key={index} stops={stops} />
+          <Side
+            key={index}
+            stops={stops}
+            likedStopsIds={LikedStops.map((stop) => stop.id)}
+          />
         ))}
       </div>
     </>
@@ -38,23 +43,22 @@ const LinePage: React.FC<Params> = async ({ params: { lineId, lineName } }) => {
 
 export default LinePage;
 
-const Side = ({
-  stops,
-}: {
+type SideProps = {
   stops: { name: string; id: string }[];
-}) => {
-  const valuesIds = ["1"];
+  likedStopsIds: string[];
+};
 
+function Side({ stops, likedStopsIds }: SideProps) {
   return (
     <div className={"flex flex-col"}>
       {stops.map((stop) => (
         <CustomLink
           key={stop.id}
           text={stop.name}
-          selected={valuesIds.includes(stop.id)}
+          selected={likedStopsIds.includes(stop.id)}
           href={`/stop/${stop.id}/${stop.name}`}
         />
       ))}
     </div>
   );
-};
+}

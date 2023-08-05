@@ -1,10 +1,12 @@
 import React from "react";
 import { CustomLink } from "../../components/CustomLink";
 import getLines from "@/actions/getLines";
+import { getLiked } from "@/actions";
 
 // @ts-ignore
 const Lines: React.FC = async () => {
   const Lines = await getLines();
+  const LikedLines = await getLiked("line");
 
   return (
     <main className={"p-3"}>
@@ -19,7 +21,11 @@ const Lines: React.FC = async () => {
               >
                 {lineType.header}
               </h3>
-              <LinesList key={lineType.header} lines={lineType.lines} />
+              <LinesList
+                key={lineType.header}
+                lines={lineType.lines}
+                likedLinesIds={LikedLines.map((line) => line.id)}
+              />
             </div>
           ))}
         </div>
@@ -28,14 +34,20 @@ const Lines: React.FC = async () => {
   );
 };
 
-const LinesList = ({ lines }: { lines: any[] }) => {
+const LinesList = ({
+  lines,
+  likedLinesIds,
+}: {
+  lines: { name: string; id: string }[];
+  likedLinesIds: string[];
+}) => {
   return (
     <div className={"grid grid-cols-4"}>
       {lines.map((line) => (
         <CustomLink
           key={line.id}
           text={line.name}
-          selected={false}
+          selected={likedLinesIds.includes(line.id)}
           href={`line/${line.id}/${line.name}`}
         />
       ))}
