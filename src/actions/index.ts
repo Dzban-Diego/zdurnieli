@@ -9,6 +9,7 @@ export async function changeTheme() {
   cookieStore.set("theme", newTheme, {
     expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 5),
   });
+  return newTheme;
 }
 
 export async function getTheme() {
