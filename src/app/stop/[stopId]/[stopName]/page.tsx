@@ -30,7 +30,9 @@ const BottomTable: React.FC<Props> = async ({ stopId }) => {
   return (
     <>
       <h2 className={"my-3 text-4xl text-textColor dark:text-dark_textColor"}>
+        <a href={`https://www.zditm.szczecin.pl/pl/pasazer/rozklady-jazdy/tabliczka/${stopId.replaceAll('-', '/')}`}>
         Rozkład jazdy
+        </a>
       </h2>
       <table className="bg-white  dark:bg-[#191a1e] secondary rounded shadow w-full overflow-hidden">
         <tbody>
