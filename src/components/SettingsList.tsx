@@ -17,29 +17,16 @@ function SettingsList({ list: cookieList, cookieKey }: Props) {
   const [listRef] = useAutoAnimate({
     duration: 200,
   });
-  function moveUp(index: number) {
-    const newList = [...list];
-    const item = newList[index];
-    const prevItem = newList[index - 1];
-    if (!item || !prevItem) {
-      return;
-    }
-    newList[index] = prevItem;
-    newList[index - 1] = item;
-    setCookies(cookieKey, JSON.stringify(newList));
-    setList(newList);
-    localStorage.setItem(cookieKey, JSON.stringify(newList));
-  }
 
-  function moveDown(index: number) {
+  function replaceItems(index: number, secondIndex: number) {
     const newList = [...list];
     const item = newList[index];
-    const prevItem = newList[index + 1];
+    const prevItem = newList[secondIndex];
     if (!item || !prevItem) {
       return;
     }
     newList[index] = prevItem;
-    newList[index + 1] = item;
+    newList[secondIndex] = item;
     setCookies(cookieKey, JSON.stringify(newList));
     setList(newList);
     localStorage.setItem(cookieKey, JSON.stringify(newList));
@@ -52,8 +39,8 @@ function SettingsList({ list: cookieList, cookieKey }: Props) {
           key={stop.id}
           index={index}
           name={stop.name}
-          moveUp={moveUp}
-          moveDown={moveDown}
+          moveUp={() => replaceItems(index, index - 1)}
+          moveDown={() => replaceItems(index, index + 1)}
           last={index === list.length - 1}
           first={index === 0}
         />
