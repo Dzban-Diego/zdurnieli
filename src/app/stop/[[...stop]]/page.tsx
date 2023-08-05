@@ -2,6 +2,8 @@ import React, { Suspense } from "react";
 import StopLiveTable from "@/components/StopLiveTable";
 import getStopTable from "@/actions/getStopTable";
 
+export const revalidate = 12;
+
 const Line = ({
   params: { stop },
 }: {
@@ -50,7 +52,7 @@ const BottomTable: React.FC<Props> = async ({ lineId, stopId }) => {
       <h2 className={"my-3 text-4xl text-textColor dark:text-dark_textColor"}>
         Rozkład jazdy
       </h2>
-      <table className="bg-white rounded shadow w-full overflow-hidden">
+      <table className="bg-white  dark:bg-[#191a1e] secondary rounded shadow w-full overflow-hidden">
         <tbody>
           {TableData.map((item) => {
             return (
@@ -60,13 +62,15 @@ const BottomTable: React.FC<Props> = async ({ lineId, stopId }) => {
                   return (
                     <td
                       key={departure.minute}
-                      className={`route${departure.route} ${
+                      className={`route${
+                        departure.route
+                      } text-black dark:text-white ${
                         departure.current
                           ? "border-2 border-green-500 rounded"
                           : ""
                       }`}
                     >
-                      <a href={departure.url}>
+                      <a href={departure.url} className="">
                         <span>{departure.minute}</span>
                         <span className="align-top text-xs">
                           {departure.route}

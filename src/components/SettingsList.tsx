@@ -67,7 +67,7 @@ type ItemProps = {
 
 function Item({ name, index, moveDown, moveUp }: ItemProps) {
   return (
-    <div className="text-xl p-4 flex flex-row w-full bg-white shadow justify-between rounded mb-3">
+    <div className="text-xl p-4 flex flex-row w-full bg-white dark:bg-black dark:text-dark_textColor shadow justify-between rounded mb-3">
       {name}
       <div className="flex gap-3">
         <button onClick={() => moveUp(index)}>

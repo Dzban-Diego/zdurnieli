@@ -1,5 +1,9 @@
 "use server";
 
+import dayjs from "dayjs";
+
+require("dayjs/locale/pl");
+
 async function getLiveTable(stopID: string) {
   const stopsResponse = await fetch(
     "https://www.zditm.szczecin.pl/api/v1/stops"
@@ -12,11 +16,15 @@ async function getLiveTable(stopID: string) {
   const stopNumber = stops.data.find((stop) => stop.id.toString() === stopID);
 
   if (!stopNumber) {
-    return [];
+    return {
+      time: dayjs().locale("pl").format("HH:mm:ss"),
+      data: [],
+    };
   }
 
   const response = await fetch(
-    `https://www.zditm.szczecin.pl/api/v1/displays/${stopNumber.number}`
+    `https://www.zditm.szczecin.pl/api/v1/displays/${stopNumber.number}`,
+    { next: { revalidate: 60 } }
   );
 
   const data = (await response.json()) as {
@@ -30,11 +38,18 @@ async function getLiveTable(stopID: string) {
     }[];
   };
 
-  return data.departures.map(departure => ({
-      line: departure.line_number,
-      direction: departure.direction,
-      time: departure.time_real ? `${departure.time_real} min` : departure.time_scheduled || "",
-  })).splice(0, 5);
+  return {
+    time: dayjs().locale("pl").format("HH:mm:ss"),
+    data: data.departures
+      .map((departure) => ({
+        line: departure.line_number,
+        direction: departure.direction,
+        time: departure.time_real
+          ? `${departure.time_real} min`
+          : departure.time_scheduled || "",
+      }))
+      .splice(0, 5),
+  };
 }
 
 export default getLiveTable;

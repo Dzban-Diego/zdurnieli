@@ -3,17 +3,17 @@
 @tailwind utilities;
 
 .routeb {
-    color: red;
+    color: red!important;
 }
 
 .routec {
-    color: green;
+    color: green!important;
 }
 
 .routed {
-    color: magenta;
+    color: magenta!important;
 }
 
 .routee {
-    color: blue;
+    color: blue!important;
 }

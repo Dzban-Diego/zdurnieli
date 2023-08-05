@@ -47,10 +47,13 @@ const StopLiveTable: React.FC<Props> = async ({
           Theme={Theme}
         />
       </div>
-      <div className="bg-white dark:bg-black w-full rounded shadow">
-        {LineTable.map((line, index) => (
+      <div className="bg-white dark:bg-black w-full rounded shadow flex flex-col">
+        {LineTable.data.map((line, index) => (
           <StopCard key={index} {...line} />
         ))}
+        <span className="text-gray p-1 text-right self-end">
+          Ostatnia aktualizacja: {LineTable.time}
+        </span>
       </div>
     </>
   );
