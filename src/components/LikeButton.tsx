@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 import { Button } from "./Button";
 import { RiHeart3Fill, RiHeart3Line } from "react-icons/ri";
 import { Keys, handleLike } from "@/actions";
@@ -13,21 +13,25 @@ type LikeButtonProps = {
 };
 
 // @ts-ignore
-const LikeButton: React.FC<LikeButtonProps> = async ({
+const LikeButton: React.FC<LikeButtonProps> = ({
   isLiked,
   Theme,
   id,
   name,
   cookieKey,
 }) => {
+  const [isLikedState, setIsLikedState] = useState(isLiked);
+
+
   async function toggleLike() {
+    setIsLikedState(!isLikedState);
     const data = await handleLike(cookieKey, { id, name });
     localStorage.setItem(cookieKey, data || '');
   }
 
   return (
     <>
-      {isLiked ? (
+      {isLikedState ? (
         <Button
           onClick={toggleLike}
           aria-label="Zmień ulubienie"
