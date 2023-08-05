@@ -1,9 +1,10 @@
-import React, { Suspense } from "react";
+import React from "react";
 import { CustomLink } from "../../components/CustomLink";
 import { Multiple } from "../../components/Multiple";
 import getLines from "@/actions/getLines";
 
-const Lines = async () => {
+// @ts-ignore
+const Lines: React.FC = async () => {
   const Lines = await getLines();
 
   return (
@@ -43,14 +44,8 @@ const LinesList = ({ lines }: { lines: any[] }) => {
   );
 };
 
-
 const Page = () => {
-  return (
-    <Suspense>
-      {/* @ts-ignore */}
-      <Lines />
-    </Suspense>
-  );
+  return <Lines />;
 };
 
 export default Page;

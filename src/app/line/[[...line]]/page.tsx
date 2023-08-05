@@ -1,13 +1,14 @@
-import React, { Suspense } from "react";
+import React from "react";
 import getLineStops from "@/actions/getLineStops";
 import LikeButton from "@/components/LikeButton";
 import { CustomLink } from "@/components/CustomLink";
-import { Multiple } from "@/components/Multiple";
 import { getLikeStatus, getTheme } from "@/actions";
 
-// 0 - id 1 - name
-const Line = async ({ params }: { params: { line: [string, string] } }) => {
-  const lineId = `${params.line[0]}/${params.line[1]}`
+type Params = { params: { line: [string, string] } };
+
+// @ts-ignore
+const Line: React.FC<Params> = async ({ params }) => {
+  const lineId = `${params.line[0]}/${params.line[1]}`;
   const LineStops = await getLineStops(lineId);
   const Theme = await getTheme();
   const isLiked = await getLikeStatus("line", lineId);
@@ -27,31 +28,26 @@ const Line = async ({ params }: { params: { line: [string, string] } }) => {
         </h1>
       </div>
 
-      {LineStops ? (
-        <div className={"grid grid-cols-2"}>
-          {LineStops.map((stops, index) => (
-            <Side key={index} stops={stops} />
-          ))}
-        </div>
-      ) : (
-        <Loader />
-      )}
+      <div className={"grid grid-cols-2"}>
+        {LineStops.map((stops, index) => (
+          <Side key={index} stops={stops} />
+        ))}
+      </div>
     </>
   );
 };
 
 const LinePage = ({ params }: { params: { line: [string, string] } }) => {
-  return (
-    <Suspense>
-      {/* @ts-ignore */}
-      <Line params={params} />
-    </Suspense>
-  );
+  return <Line params={params} />;
 };
 
 export default LinePage;
 
-const Side = ({ stops }: { stops: { name: string; id: string, routeLetter: string }[] }) => {
+const Side = ({
+  stops,
+}: {
+  stops: { name: string; id: string; routeLetter: string }[];
+}) => {
   const valuesIds = ["1"];
 
   return (
@@ -64,27 +60,6 @@ const Side = ({ stops }: { stops: { name: string; id: string, routeLetter: strin
           href={`/stop/${stop.id}/${stop.routeLetter}/${stop.name}`}
         />
       ))}
-    </div>
-  );
-};
-
-const Loader = () => {
-  return (
-    <div className={"grid grid-cols-2"}>
-      <div className={"flex flex-col"}>
-        <Multiple instances={16}>
-          <div
-            className={"m-1 h-10 animate-pulse rounded bg-loading shadow"}
-          ></div>
-        </Multiple>
-      </div>
-      <div className={"flex flex-col"}>
-        <Multiple instances={17}>
-          <div
-            className={"m-1 h-10 animate-pulse rounded bg-loading shadow"}
-          ></div>
-        </Multiple>
-      </div>
     </div>
   );
 };

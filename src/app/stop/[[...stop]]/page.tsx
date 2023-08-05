@@ -1,4 +1,4 @@
-import React, { Suspense } from "react";
+import React from "react";
 import StopLiveTable from "@/components/StopLiveTable";
 import getStopTable from "@/actions/getStopTable";
 
@@ -7,7 +7,7 @@ export const revalidate = 12;
 const Line = ({
   params: { stop },
 }: {
-  params: { stop: [string, string, string, string,string] };
+  params: { stop: [string, string, string, string, string] };
 }) => {
   const lineId = stop[0];
   const stopId = stop[1];
@@ -20,7 +20,7 @@ const Line = ({
         stopId={`${lineId}/${stopId}`}
         stopName={decodeURI(stopName)}
       />
-      <BottomTable stopId={stopId} lineId={lineId} stopLetter={stopLetter}/>
+      <BottomTable stopId={stopId} lineId={lineId} stopLetter={stopLetter} />
     </div>
   );
 };
@@ -30,11 +30,7 @@ const Page = ({
 }: {
   params: { stop: [string, string, string, string, string] };
 }) => {
-  return (
-    <Suspense>
-      <Line params={params} />
-    </Suspense>
-  );
+  return <Line params={params} />;
 };
 
 export default Page;
@@ -46,7 +42,7 @@ interface Props {
 }
 
 //@ts-ignore
-const BottomTable: React.FC<Props> = async ({ lineId, stopId, stopLetter}) => {
+const BottomTable: React.FC<Props> = async ({ lineId, stopId, stopLetter }) => {
   const TableData = await getStopTable(lineId, stopId, stopLetter);
 
   return (

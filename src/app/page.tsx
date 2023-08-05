@@ -2,8 +2,7 @@ import { getLiked, getTheme } from "@/actions";
 import { CustomLink } from "@/components/CustomLink";
 import StopLiveTable from "@/components/StopLiveTable";
 import CheckLocalStorage from "@/components/CheckLocalStorage";
-import React, { Suspense } from "react";
-import Loading from "./loading";
+import React from "react";
 
 export const revalidate = 12;
 
@@ -38,11 +37,7 @@ async function Home() {
       </h2>
       <div className={"grid grid-cols-4"}>
         {lines.map((line) => (
-          <CustomLink
-            key={line.id}
-            href={`line/${line.id}`}
-            text={line.name}
-          />
+          <CustomLink key={line.id} href={`line/${line.id}`} text={line.name} />
         ))}
       </div>
       {stops?.length === 0 && lines?.length === 0 ? (
@@ -56,12 +51,8 @@ async function Home() {
 }
 
 const Page = () => {
-  return (
-    <Suspense fallback={<Loading />}>
-      {/* @ts-ignore */}
-      <Home />
-    </Suspense>
-  );
+  {/* @ts-ignore */}
+  return <Home />;
 };
 
 export default Page;
