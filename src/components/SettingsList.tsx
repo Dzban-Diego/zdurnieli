@@ -79,10 +79,10 @@ function Item({ name, index, moveDown, moveUp, first, last }: ItemProps) {
       {name}
       <div className="flex gap-3">
         <button onClick={() => moveUp(index)} disabled={first}>
-          <GoArrowUp size={30} color={first ? "grey" : "black"} />
+          <GoArrowUp size={30} color={first ? "grey" : undefined} />
         </button>
         <button onClick={() => moveDown(index)} disabled={last}>
-          <GoArrowDown size={30} color={last ? "grey" : "black"} />
+          <GoArrowDown size={30} color={last ? "grey" : undefined} />
         </button>
       </div>
     </div>
