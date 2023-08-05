@@ -1,6 +1,5 @@
 import React from "react";
 import { CustomLink } from "../../components/CustomLink";
-import { Multiple } from "../../components/Multiple";
 import getLines from "@/actions/getLines";
 
 // @ts-ignore
@@ -37,37 +36,11 @@ const LinesList = ({ lines }: { lines: any[] }) => {
           key={line.id}
           text={line.name}
           selected={false}
-          href={`line/${line.id}`}
+          href={`line/${line.id}/${line.name}`}
         />
       ))}
     </div>
   );
 };
 
-const Page = () => {
-  return <Lines />;
-};
-
-export default Page;
-
-const Loader = () => {
-  const instances = 64;
-  const arr = [];
-
-  for (let i = 0; i < instances; i++) {
-    arr.push(
-      <div
-        className={"m-1 h-10 animate-pulse rounded bg-loading p-2 text-2xl"}
-      />
-    );
-  }
-  return (
-    <div className={"grid grid-cols-4"}>
-      <Multiple instances={65}>
-        <div
-          className={"m-1 h-10 animate-pulse rounded bg-loading p-2 text-2xl"}
-        />
-      </Multiple>
-    </div>
-  );
-};
+export default Lines;
