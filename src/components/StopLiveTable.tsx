@@ -40,7 +40,12 @@ const StopLiveTable: React.FC<Props> = async ({
         {LineTable.data.map((line, index) => (
           <StopCard key={index} {...line} />
         ))}
-        <span className="text-gray p-1 text-right self-end">
+        {LineTable.data.length === 0 && (
+          <span className="text-xl font-bold self-center text-black my-3 dark:text-neutral-400 p-1">
+            Brak odjazdów
+          </span>
+        )}
+        <span className="text-gray p-1 self-end">
           Ostatnia aktualizacja: {LineTable.time}
         </span>
       </div>
