@@ -41,7 +41,7 @@ export default LinePage;
 const Side = ({
   stops,
 }: {
-  stops: { name: string; id: string; routeLetter: string }[];
+  stops: { name: string; id: string }[];
 }) => {
   const valuesIds = ["1"];
 
@@ -52,7 +52,7 @@ const Side = ({
           key={stop.id}
           text={stop.name}
           selected={valuesIds.includes(stop.id)}
-          href={`/stop/${stop.id}/${stop.routeLetter}/${stop.name}`}
+          href={`/stop/${stop.id}/${stop.name}`}
         />
       ))}
     </div>

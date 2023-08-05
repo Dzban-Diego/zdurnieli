@@ -17,10 +17,10 @@ async function getLineStops(lineId: string) {
   const mainElement = dom.window.document.querySelector("main");
   const bodyElements = mainElement?.querySelectorAll("tbody");
 
-  const data: { name: string; id: string; routeLetter: string }[][] = [];
+  const data: { name: string; id: string }[][] = [];
 
   bodyElements?.forEach((element) => {
-    const arr: { name: string; id: string; routeLetter: string }[] = [];
+    const arr: { name: string; id: string }[] = [];
     const stopElements = element.querySelectorAll("a");
 
     stopElements.forEach((stopEl) => {
@@ -29,8 +29,7 @@ async function getLineStops(lineId: string) {
 
       arr.push({
         name: name || "",
-        id: `${urlArray[urlArray.length - 4]}/${urlArray[urlArray.length - 3]}`,
-        routeLetter: urlArray[urlArray.length - 2],
+        id: `${urlArray[urlArray.length - 4]}-${urlArray[urlArray.length - 3]}-${urlArray[urlArray.length - 2]}`,
       });
     });
 

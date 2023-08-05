@@ -12,13 +12,12 @@ type ReturnType = {
   }[];
 }[];
 
-async function getStopTable(
-  lineId: string,
-  stopId: string,
-  stopLetter: string
-): Promise<ReturnType> {
+async function getStopTable(stopId: string): Promise<ReturnType> {
   const html = await fetch(
-    `https://www.zditm.szczecin.pl/pl/pasazer/rozklady-jazdy/tabliczka/${lineId}/${stopId}/${stopLetter}`
+    `https://www.zditm.szczecin.pl/pl/pasazer/rozklady-jazdy/tabliczka/${stopId.replaceAll(
+      "-",
+      "/"
+    )}`
   ).then((res) => {
     return res.text();
   });

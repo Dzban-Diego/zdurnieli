@@ -4,46 +4,28 @@ import getStopTable from "@/actions/getStopTable";
 
 export const revalidate = 12;
 
-const Line = ({
-  params: { stop },
+const Stop = ({
+  params: { stopId, stopName },
 }: {
-  params: { stop: [string, string, string, string, string] };
+  params: { stopName: string; stopId: string };
 }) => {
-  const lineId = stop[0];
-  const stopId = stop[1];
-  const stopLetter = stop[2];
-  const stopName = stop[3];
-
   return (
     <div className={"flex flex-col items-center text-center"}>
-      <StopLiveTable
-        stopId={`${lineId}/${stopId}`}
-        stopName={decodeURI(stopName)}
-      />
-      <BottomTable stopId={stopId} lineId={lineId} stopLetter={stopLetter} />
+      <StopLiveTable stopId={stopId} stopName={decodeURI(stopName)} />
+      <BottomTable stopId={stopId} />
     </div>
   );
 };
 
-const Page = ({
-  params,
-}: {
-  params: { stop: [string, string, string, string, string] };
-}) => {
-  return <Line params={params} />;
-};
+export default Stop;
 
-export default Page;
-
-interface Props {
+type Props = {
   stopId: string;
-  lineId: string;
-  stopLetter: string;
 }
 
 //@ts-ignore
-const BottomTable: React.FC<Props> = async ({ lineId, stopId, stopLetter }) => {
-  const TableData = await getStopTable(lineId, stopId, stopLetter);
+const BottomTable: React.FC<Props> = async ({ stopId }) => {
+  const TableData = await getStopTable(stopId);
 
   return (
     <>
