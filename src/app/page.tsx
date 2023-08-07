@@ -32,11 +32,7 @@ export default async function Home() {
         </h2>
       ) : null}
       {stops.map((stop) => (
-        <StopLiveTable
-          key={stop.id}
-          stopId={stop.id}
-          stopName={stop.name}
-        />
+        <StopLiveTable key={stop.id} stopId={stop.id} stopName={stop.name} />
       ))}
       {isLines ? (
         <h2
@@ -56,7 +52,11 @@ export default async function Home() {
           />
         ))}
       </div>
-      <CustomLink href={"/lines"} text={"Wszystkie linie"} className="mt-4 m-0" />
+      <CustomLink
+        href={"/lines"}
+        text={"Wszystkie linie"}
+        className="mt-4 m-0"
+      />
     </div>
   );
 }

@@ -30,6 +30,21 @@ module.exports = {
         white: "#fff",
       },
     },
+    keyframes: {
+      drive: {
+        "0%": { transform: "translateY(0px)" },
+        "50%": { transform: "translateY(2px)" },
+        "100%": { transform: "translateY(0px)" },
+      },
+      ground: {
+        "0%": { transform: "translateX(0px)" },
+        "100%": { transform: "translateX(-400px)" },
+      },
+    },
+    animation: {
+      drive: "drive 1s ease-in-out infinite",
+      ground: "ground 10s linear infinite",
+    },
   },
   plugins: [],
 };
