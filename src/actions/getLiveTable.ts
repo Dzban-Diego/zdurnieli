@@ -23,7 +23,7 @@ async function getLiveTable(stopId: string) {
 
   const response = await fetch(
     `https://www.zditm.szczecin.pl/api/v1/displays/${stopNumber.number}`,
-    { next: { revalidate: 60 } }
+    { next: { revalidate: 0 } }
   );
 
   const data = (await response.json()) as {

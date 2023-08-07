@@ -2,8 +2,6 @@ import React from "react";
 import StopLiveTable from "@/components/StopLiveTable";
 import getStopTable from "@/actions/getStopTable";
 
-export const revalidate = 12;
-
 type Props = {
   params: { stopName: string; stopId: string };
 };

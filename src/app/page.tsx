@@ -4,8 +4,6 @@ import StopLiveTable from "@/components/StopLiveTable";
 import CheckLocalStorage from "@/components/CheckLocalStorage";
 import React from "react";
 
-export const revalidate = 12;
-
 export default async function Home() {
   const stops = await getLiked("stop");
   const lines = await getLiked("line");

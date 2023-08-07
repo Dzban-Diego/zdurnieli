@@ -10,7 +10,8 @@ async function getLineStops(lineId: string) {
     `https://www.zditm.szczecin.pl/pl/pasazer/rozklady-jazdy,linia,${lineId.replaceAll(
       "-",
       "/"
-    )}`
+    )}`,
+    { next: { revalidate: 60 } }
   ).then((res) => res.text());
 
   const dom = new JSDOM(html);
