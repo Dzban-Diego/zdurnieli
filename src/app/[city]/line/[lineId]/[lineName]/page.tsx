@@ -4,20 +4,22 @@ import LikeButton from "@/components/LikeButton";
 import { CustomLink } from "@/components/CustomLink";
 import { getLikeStatus, getTheme, getLiked } from "@/actions";
 
-type Params = { params: { lineId: string; lineName: string } };
+type Params = { params: { city: string; lineId: string; lineName: string } };
 
 // @ts-ignore
-const LinePage: React.FC<Params> = async ({ params: { lineId, lineName } }) => {
+const LinePage: React.FC<Params> = async ({
+  params: { city, lineId, lineName },
+}) => {
   const LineStops = await getLineStops(lineId);
   const Theme = await getTheme();
-  const isLiked = await getLikeStatus("line", lineId);
-  const LikedStops = await getLiked("stop");
+  const isLiked = await getLikeStatus("line-zs", lineId);
+  const LikedStops = await getLiked("stop-zs");
 
   return (
     <>
       <div className={"flex"}>
         <LikeButton
-          cookieKey={"line"}
+          cookieKey={"line-zs"}
           name={lineName}
           id={lineId}
           Theme={Theme}
@@ -34,6 +36,7 @@ const LinePage: React.FC<Params> = async ({ params: { lineId, lineName } }) => {
             key={index}
             stops={stops}
             likedStopsIds={LikedStops.map((stop) => stop.id)}
+            city={city}
           />
         ))}
       </div>
@@ -46,9 +49,10 @@ export default LinePage;
 type SideProps = {
   stops: { name: string; id: string }[];
   likedStopsIds: string[];
+  city: string;
 };
 
-function Side({ stops, likedStopsIds }: SideProps) {
+function Side({ stops, likedStopsIds, city }: SideProps) {
   return (
     <div className={"flex flex-col"}>
       {stops.map((stop) => (
@@ -56,7 +60,7 @@ function Side({ stops, likedStopsIds }: SideProps) {
           key={stop.id}
           text={stop.name}
           selected={likedStopsIds.includes(stop.id)}
-          href={`/stop/${stop.id}/${stop.name}`}
+          href={`/${city}/stop/${stop.id}/${stop.name}`}
         />
       ))}
     </div>

@@ -18,7 +18,7 @@ export async function getTheme() {
   return Theme;
 }
 
-export type Keys = "line" | "stop";
+export type Keys = "line-zs" | "stop-zs";
 type Value = {
   name: string;
   id: string;

@@ -8,25 +8,26 @@ import { getLikeStatus, getTheme } from "@/actions";
 type Props = {
   stopId: string;
   stopName: string;
+  city: string
 };
 
 // @ts-ignore
-const StopLiveTable: React.FC<Props> = async ({ stopId, stopName }) => {
+const StopLiveTable: React.FC<Props> = async ({city, stopId, stopName }) => {
   const LineTable = await getLiveTable(stopId);
   const Theme = await getTheme();
-  const isLiked = await getLikeStatus("stop", stopId);
+  const isLiked = await getLikeStatus("stop-zs", stopId);
 
   return (
     <>
       <div className={"flex items-center justify-between"}>
         <Link
-          href={`/stop/${stopId}/${stopName}`}
+          href={`${city}/stop/${stopId}/${stopName}`}
           className={"p-4 text-2xl text-font dark:dark_font"}
         >
           {stopName}
         </Link>
         <LikeButton
-          cookieKey={"stop"}
+          cookieKey={"stop-zs"}
           name={stopName}
           id={stopId}
           isLiked={isLiked}

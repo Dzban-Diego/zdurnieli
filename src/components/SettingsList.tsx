@@ -9,7 +9,7 @@ type Props = {
     name: string;
     id: string;
   }[];
-  cookieKey: "stop" | "line";
+  cookieKey: "stop-zs" | "line-zs";
 };
 
 function SettingsList({ list: cookieList, cookieKey }: Props) {

@@ -3,10 +3,10 @@ import StopLiveTable from "@/components/StopLiveTable";
 import getStopTable from "@/actions/getStopTable";
 
 type Props = {
-  params: { stopName: string; stopId: string };
+  params: { city: string; stopName: string; stopId: string };
 };
 
-export default function Stop({ params: { stopId, stopName } }: Props) {
+export default function Stop({ params: { city, stopId, stopName } }: Props) {
   return (
     <div className={"flex flex-col items-center text-center"}>
       <StopLiveTable stopId={stopId} stopName={decodeURI(stopName)} />

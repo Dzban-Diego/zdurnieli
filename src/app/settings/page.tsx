@@ -14,7 +14,7 @@ async function Page() {
       >
         Ulubione przystanki
       </h2>
-      <SettingsList list={Stops} cookieKey={"stop"} />
+      <SettingsList list={Stops} cookieKey={"stop-zs"} />
       <h2
         className={
           "my-3 text-center text-3xl text-textColor dark:text-dark_textColor"
@@ -22,7 +22,7 @@ async function Page() {
       >
         Ulubione linie
       </h2>
-      <SettingsList list={Lines} cookieKey={"line"} />
+      <SettingsList list={Lines} cookieKey={"line-zs"} />
     </div>
   );
 }
