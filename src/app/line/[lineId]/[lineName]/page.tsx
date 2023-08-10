@@ -23,7 +23,7 @@ const LinePage: React.FC<Params> = async ({ params: { lineId, lineName } }) => {
           Theme={Theme}
           isLiked={isLiked}
         />
-        <h1 className={"p-4 text-4xl dark:text-dark_textColor text-textColor"}>
+        <h1 className={"p-4 text-4xl dark:text-dark_font text-font"}>
           Linia {lineName}
         </h1>
       </div>

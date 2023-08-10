@@ -23,7 +23,7 @@ export const CustomLink: React.FC<Props> = ({
       href={href}
       className={`m-1 rounded-md p-3 text-xl shadow-md ${className} ${
         selected
-          ? `bg-liked text-black`
+          ? `bg-accent text-black`
           : `${
               color ? color : "bg-white dark:bg-black"
             } text-black dark:text-white`

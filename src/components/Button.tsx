@@ -12,7 +12,7 @@ type Props = PropsWithChildren & {
 
 export const Button: React.FC<Props> = ({ onClick, text, icon,  ...props}) => {
   return (
-    <button onClick={onClick} className={`m-1 p-2 text-4xl text-textColor`} {...props}>
+    <button onClick={onClick} className={`m-1 p-2 text-4xl text-font`} {...props}>
       {text}
       {icon}
     </button>

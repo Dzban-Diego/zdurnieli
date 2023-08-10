@@ -21,7 +21,7 @@ const StopLiveTable: React.FC<Props> = async ({ stopId, stopName }) => {
       <div className={"flex items-center justify-between"}>
         <Link
           href={`/stop/${stopId}/${stopName}`}
-          className={"p-4 text-2xl text-textColor dark:text-dark_textColor"}
+          className={"p-4 text-2xl text-font dark:dark_font"}
         >
           {stopName}
         </Link>
@@ -38,7 +38,7 @@ const StopLiveTable: React.FC<Props> = async ({ stopId, stopName }) => {
           <StopCard key={index} {...line} />
         ))}
         {LineTable.data.length === 0 && (
-          <span className="text-xl font-bold self-center text-black my-3 dark:text-neutral-400 p-1">
+          <span className="text-xl font-bold self-center text-font my-3 dark:text-dark_font p-1">
             Brak odjazdów
           </span>
         )}

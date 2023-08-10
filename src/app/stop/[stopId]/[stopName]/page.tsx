@@ -21,7 +21,7 @@ async function BottomTable({ stopId }: { stopId: string }) {
 
   return (
     <>
-      <h2 className={"my-3 text-4xl text-textColor dark:text-dark_textColor"}>
+      <h2 className={"my-3 text-4xl text-font dark:text-dark_font"}>
         <a
           href={`https://www.zditm.szczecin.pl/pl/pasazer/rozklady-jazdy/tabliczka/${stopId.replaceAll(
             "-",
@@ -31,19 +31,19 @@ async function BottomTable({ stopId }: { stopId: string }) {
           Rozkład jazdy
         </a>
       </h2>
-      <table className="bg-white  dark:bg-[#191a1e] secondary rounded shadow w-full overflow-hidden">
+      <table className="bg-secondary dark:bg-dark_secondary secondary rounded shadow w-full overflow-hidden">
         <tbody>
           {TableData.map((item) => {
             return (
               <tr key={item.hour}>
-                <th className="bg-black text-white p-1">{item.hour}</th>
+                <th className="bg-black text-font p-1">{item.hour}</th>
                 {item.departures.map((departure) => {
                   return (
                     <td
                       key={departure.minute}
                       className={`route${
                         departure.route
-                      } text-black dark:text-white ${
+                      } text-font dark:text-dark_font ${
                         departure.current
                           ? "border-2 border-green-500 rounded"
                           : ""

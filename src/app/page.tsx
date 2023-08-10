@@ -16,14 +16,14 @@ export default async function Home() {
     <div className="flex flex-col p-2">
       <CheckLocalStorage theme={!!theme} line={!!lines} stop={!!stops} />
       {!isLines && !isStops ? (
-        <span className={"mb-4 text-xl text-textColor text-center"}>
+        <span className={"mb-4 text-xl text-font dark:text-dark_font text-center"}>
           Twoje ulubione przystanki i linie będą się tutaj wyświetlać, dodaj je!
         </span>
       ) : null}
       {isStops ? (
         <h2
           className={
-            "flex justify-center text-3xl text-textColor dark:text-dark_textColor"
+            "flex justify-center text-3xl text-font dark:text-dark_font"
           }
         >
           Ulubione przystanki
@@ -35,7 +35,7 @@ export default async function Home() {
       {isLines ? (
         <h2
           className={
-            "my-3 flex justify-center text-3xl text-textColor dark:text-dark_textColor"
+            "my-3 flex justify-center text-3xl text-font dark:text-dark_font"
           }
         >
           Ulubione Linie

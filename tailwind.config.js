@@ -10,22 +10,18 @@ module.exports = {
     extend: {
       colors: {
         background: "#f5f5f5",
+        secondary: "#fff",
         primary: "#111f90",
-        secondary: "#cf2116",
-        liked: "#c395e0",
-        textColor: "#6a6a6a",
+
+        accent: "#c395e0",
+        font: "#6a6a6a",
         gray: "#6a6a6a",
         loading: "#5a5a5a",
-        orange: "#fa0",
 
         dark_background: "#272930",
-        primary: "#111f90",
-        secondary: "#cf2116",
-        liked: "#c395e0",
-        dark_textColor: "#ebecf0",
-        gray: "#6a6a6a",
-        loading: "#5a5a5a",
-        orange: "#fa0",
+        dark_secondary: "#191a1e",
+        dark_font: "#ebecf0",
+
         black: "#000",
         white: "#fff",
       },

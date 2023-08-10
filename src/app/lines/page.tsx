@@ -16,7 +16,7 @@ const Lines: React.FC = async () => {
             <div key={lineType.header}>
               <h3
                 className={
-                  "my-3 text-2xl font-bold text-textColor dark:text-dark_textColor"
+                  "my-3 text-2xl font-bold text-fonc dark:text-dark_font"
                 }
               >
                 {lineType.header}
