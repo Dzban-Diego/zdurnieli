@@ -9,7 +9,7 @@ type Props = {
 export default function Stop({ params: { city, stopId, stopName } }: Props) {
   return (
     <div className={"flex flex-col items-center text-center"}>
-      <StopLiveTable stopId={stopId} stopName={decodeURI(stopName)} />
+      <StopLiveTable stopId={stopId} stopName={decodeURI(stopName)} city={city}/>
       {/* @ts-ignore */}
       <BottomTable stopId={stopId} />
     </div>
