@@ -11,6 +11,9 @@ dependencies:
   '@use-gesture/react':
     specifier: ^10.2.27
     version: 10.2.27(react@18.2.0)
+  '@vercel/analytics':
+    specifier: ^1.0.2
+    version: 1.0.2
   autoprefixer:
     specifier: 10.4.14
     version: 10.4.14(postcss@8.4.27)
@@ -430,6 +433,10 @@ packages:
     dependencies:
       '@use-gesture/core': 10.2.27
       react: 18.2.0
+    dev: false
+
+  /@vercel/analytics@1.0.2:
+    resolution: {integrity: sha512-BZFxVrv24VbNNl5xMxqUojQIegEeXMI6rX3rg1uVLYUEXsuKNBSAEQf4BWEcjQDp/8aYJOj6m8V4PUA3x/cxgg==}
     dev: false
 
   /abab@2.0.6:

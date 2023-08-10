@@ -1,3 +1,4 @@
+import { Analytics } from '@vercel/analytics/react';
 import "./globals.css";
 import Footer from "@/components/Footer";
 import ChangeThemeButton from "@/components/ChangeThemeButton";
@@ -57,6 +58,7 @@ export default function MyApp({ children }: PropsWithChildren) {
           {children}
         </main>
         <Footer />
+        <Analytics />
       </body>
     </html>
   );
