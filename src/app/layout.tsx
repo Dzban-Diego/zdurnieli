@@ -20,7 +20,7 @@ export const metadata = {
   other: {
     appleMobileWebAppCapable: "yes",
     appleMobileWebAppStatusBarStyle: "black",
-    appleTouchIcon: "/app-icon.png",
+    appleTouchIcon: "/apple-icon.png",
   },
 };
 
