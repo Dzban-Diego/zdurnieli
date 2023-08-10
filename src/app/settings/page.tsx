@@ -2,8 +2,8 @@ import { getLiked } from "@/actions";
 import SettingsList from "@/components/SettingsList";
 
 async function Page() {
-  const Stops = await getLiked("stop");
-  const Lines = await getLiked("line");
+  const Stops = await getLiked("stop-zs");
+  const Lines = await getLiked("line-zs");
 
   return (
     <div>
