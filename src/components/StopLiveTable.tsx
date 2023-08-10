@@ -21,7 +21,7 @@ const StopLiveTable: React.FC<Props> = async ({city, stopId, stopName }) => {
     <>
       <div className={"flex items-center justify-between"}>
         <Link
-          href={`${city}/stop/${stopId}/${stopName}`}
+          href={`/${city}/stop/${stopId}/${stopName}`}
           className={"p-4 text-2xl text-font dark:dark_font"}
         >
           {stopName}
