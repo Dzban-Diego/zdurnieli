@@ -9,7 +9,7 @@ import { PropsWithChildren } from "react";
 
 export const metadata = {
   title: "Zaraz będę",
-  description: "Zaraz będę",
+  description: "Przestań spóźniać się na przystanki. Z Zaraz będę nigdy nie przeoczysz odjazdu!",
   themeColor: "#000",
   applicationName: "Zaraz będę",
   icons: ["app-icon.png"],
