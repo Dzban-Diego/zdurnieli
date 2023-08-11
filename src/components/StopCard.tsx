@@ -13,7 +13,7 @@ function StopCard({ line, direction, time }: Props) {
   return (
     <div
       className={
-        "text-black dark:text-neutral-400 p-3 text-xl font-bold flex justify-between"
+        "text-black dark:text-neutral-400 px-3 py-2 text-xl font-bold flex justify-between"
       }
       onClick={router.refresh}
     >
