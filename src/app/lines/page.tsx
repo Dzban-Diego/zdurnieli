@@ -3,10 +3,8 @@ import getLines from "@/actions/getLines";
 import { getLiked } from "@/actions";
 import { CustomLink } from "@/components/CustomLink";
 
-type Props = { params: { city: string } };
-
 // @ts-ignore
-const Lines: React.FC = async ({ params: { city } }: Props) => {
+const Lines: React.FC = async () => {
   const Lines = await getLines();
   const LikedLines = await getLiked("line-zs");
 
@@ -27,7 +25,6 @@ const Lines: React.FC = async ({ params: { city } }: Props) => {
                 key={lineType.header}
                 lines={lineType.lines}
                 likedLinesIds={LikedLines.map((line) => line.id)}
-                city={city}
               />
             </div>
           ))}
@@ -40,10 +37,9 @@ const Lines: React.FC = async ({ params: { city } }: Props) => {
 type LinesListProps = {
   lines: { name: string; id: string }[];
   likedLinesIds: string[];
-  city: string;
 };
 
-function LinesList({ lines, likedLinesIds, city }: LinesListProps) {
+function LinesList({ lines, likedLinesIds}: LinesListProps) {
   return (
     <div className={"grid grid-cols-4"}>
       {lines.map((line) => (
@@ -51,7 +47,7 @@ function LinesList({ lines, likedLinesIds, city }: LinesListProps) {
           key={line.id}
           text={line.name}
           selected={likedLinesIds.includes(line.id)}
-          href={`/${city}/line/${line.id}/${line.name}`}
+          href={`/line/${line.id}/${line.name}`}
         />
       ))}
     </div>

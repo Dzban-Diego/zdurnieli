@@ -4,11 +4,11 @@ import LikeButton from "@/components/LikeButton";
 import { CustomLink } from "@/components/CustomLink";
 import { getLikeStatus, getTheme, getLiked } from "@/actions";
 
-type Params = { params: { city: string; lineId: string; lineName: string } };
+type Params = { params: {  lineId: string; lineName: string } };
 
 // @ts-ignore
 const LinePage: React.FC<Params> = async ({
-  params: { city, lineId, lineName },
+  params: { lineId, lineName },
 }) => {
   const LineStops = await getLineStops(lineId);
   const Theme = await getTheme();
@@ -36,7 +36,6 @@ const LinePage: React.FC<Params> = async ({
             key={index}
             stops={stops}
             likedStopsIds={LikedStops.map((stop) => stop.id)}
-            city={city}
           />
         ))}
       </div>
@@ -49,10 +48,9 @@ export default LinePage;
 type SideProps = {
   stops: { name: string; id: string }[];
   likedStopsIds: string[];
-  city: string;
 };
 
-function Side({ stops, likedStopsIds, city }: SideProps) {
+function Side({ stops, likedStopsIds}: SideProps) {
   return (
     <div className={"flex flex-col"}>
       {stops.map((stop) => (
@@ -60,7 +58,7 @@ function Side({ stops, likedStopsIds, city }: SideProps) {
           key={stop.id}
           text={stop.name}
           selected={likedStopsIds.includes(stop.id)}
-          href={`/${city}/stop/${stop.id}/${stop.name}`}
+          href={`/stop/${stop.id}/${stop.name}`}
         />
       ))}
     </div>
