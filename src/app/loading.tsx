@@ -1,11 +1,18 @@
+import { getTheme } from "@/actions";
 import Image from "next/image";
 
-const Loading = () => {
+const Loading = async () => {
+  const theme = await getTheme();
+
   return (
     <div className="relative flex flex-col items-center w-full mt-32">
       <div className="overflow-hidden w-[200px]">
         <div className="w-[600px] animate-ground">
-          <Image src="/roud.png" alt="loading" width={600} height={0} />
+          {theme === "dark" ? (
+            <Image src="/dark_roud.png" alt="loading" width={600} height={0} />
+          ) : (
+            <Image src="/roud.png" alt="loading" width={600} height={0} />
+          )}
         </div>
       </div>
 
@@ -18,7 +25,9 @@ const Loading = () => {
           className=""
         />
       </div>
-      <span className="mt-10 animate-pulse">Ładowanie..</span>
+      <span className="mt-10 animate-pulse dark:text-dark_font">
+        Ładowanie..
+      </span>
     </div>
   );
 };
