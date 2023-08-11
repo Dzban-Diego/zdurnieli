@@ -2,7 +2,8 @@
 import React, { useState } from "react";
 import { Button } from "./Button";
 import { RiHeart3Fill, RiHeart3Line } from "react-icons/ri";
-import { Keys, handleLike } from "@/actions";
+import { handleLike } from "@/actions";
+import { Keys } from "@/config";
 
 type LikeButtonProps = {
   name: string;
