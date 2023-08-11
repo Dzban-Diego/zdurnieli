@@ -80,7 +80,7 @@ export default function ImportExport({ theme }: Props) {
           type="text"
           placeholder="Ulubione"
           ref={inputRef}
-          className="text-xl rounded shadow p-3 grow dark:bg-black"
+          className="text-xl rounded shadow p-3 grow dark:bg-black dark:text-dark_font"
         />
         <button className="mx-3" onClick={handleCopy}>
           {theme === "dark" ? (
