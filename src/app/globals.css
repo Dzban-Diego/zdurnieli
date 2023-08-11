@@ -3,17 +3,21 @@
 @tailwind utilities;
 
 .routeb {
-    color: red!important;
+    color: red !important;
 }
 
 .routec {
-    color: green!important;
+    color: green !important;
 }
 
 .routed {
-    color: magenta!important;
+    color: magenta !important;
 }
 
 .routee {
-    color: blue!important;
+    color: blue !important;
+}
+
+h2 {
+    @apply flex my-3 justify-center text-3xl text-font dark:text-dark_font;
 }

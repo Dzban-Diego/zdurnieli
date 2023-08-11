@@ -21,7 +21,7 @@ async function BottomTable({ stopId }: { stopId: string }) {
 
   return (
     <>
-      <h2 className={"my-3 text-4xl text-font dark:text-dark_font"}>
+      <h2>
         <a
           href={`https://www.zditm.szczecin.pl/pl/pasazer/rozklady-jazdy/tabliczka/${stopId.replaceAll(
             "-",

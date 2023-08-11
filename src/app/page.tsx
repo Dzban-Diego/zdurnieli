@@ -23,31 +23,11 @@ export default async function Home() {
           Twoje ulubione przystanki i linie będą się tutaj wyświetlać, dodaj je!
         </span>
       ) : null}
-      {isStops ? (
-        <h2
-          className={
-            "flex justify-center text-3xl text-font dark:text-dark_font"
-          }
-        >
-          Ulubione przystanki
-        </h2>
-      ) : null}
+      {isStops ? <h2>Ulubione przystanki</h2> : null}
       {stops.map((stop) => (
-        <StopLiveTable
-          key={stop.id}
-          stopId={stop.id}
-          stopName={stop.name}
-        />
+        <StopLiveTable key={stop.id} stopId={stop.id} stopName={stop.name} />
       ))}
-      {isLines ? (
-        <h2
-          className={
-            "my-3 flex justify-center text-3xl text-font dark:text-dark_font"
-          }
-        >
-          Ulubione Linie
-        </h2>
-      ) : null}
+      {isLines ? <h2>Ulubione Linie</h2> : null}
       <div className={"grid grid-cols-4"}>
         {lines.map((line) => (
           <CustomLink

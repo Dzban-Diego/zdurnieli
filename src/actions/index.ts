@@ -16,7 +16,7 @@ export async function changeTheme() {
 export async function getTheme() {
   const cookieStore = cookies();
   const Theme = cookieStore.get("theme")?.value || "light";
-  return Theme;
+  return Theme as "light" | "dark";
 }
 
 type Value = {
