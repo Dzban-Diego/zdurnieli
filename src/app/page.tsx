@@ -4,7 +4,6 @@ import StopLiveTable from "@/components/StopLiveTable";
 import CheckLocalStorage from "@/components/CheckLocalStorage";
 import React from "react";
 import { LINES_STORAGE_KEY, STOPS_STORAGE_KEY } from "@/config";
-import Loading from "./loading";
 
 export default async function Home() {
   const stops = await getLiked(STOPS_STORAGE_KEY);
@@ -13,8 +12,6 @@ export default async function Home() {
 
   const isLines = lines?.length !== 0;
   const isStops = stops?.length !== 0;
-
-  return <Loading />;
 
   return (
     <div className="flex flex-col p-2">
