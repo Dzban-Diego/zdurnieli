@@ -1,4 +1,5 @@
 "use server";
+import { Keys } from "@/config";
 import { cookies } from "next/headers";
 
 export async function changeTheme() {
@@ -18,7 +19,6 @@ export async function getTheme() {
   return Theme;
 }
 
-export type Keys = "line-zs" | "stop-zs";
 type Value = {
   name: string;
   id: string;

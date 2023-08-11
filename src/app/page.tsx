@@ -3,10 +3,11 @@ import { CustomLink } from "@/components/CustomLink";
 import StopLiveTable from "@/components/StopLiveTable";
 import CheckLocalStorage from "@/components/CheckLocalStorage";
 import React from "react";
+import { LINES_STORAGE_KEY, STOPS_STORAGE_KEY } from "@/config";
 
 export default async function Home() {
-  const stops = await getLiked("stop-zs");
-  const lines = await getLiked("line-zs");
+  const stops = await getLiked(STOPS_STORAGE_KEY);
+  const lines = await getLiked(LINES_STORAGE_KEY);
   const theme = await getTheme();
 
   const isLines = lines?.length !== 0;

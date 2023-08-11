@@ -3,13 +3,14 @@ import { setCookies } from "@/actions";
 import { GoArrowDown, GoArrowUp } from "react-icons/go";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
 import { useState } from "react";
+import { Keys } from "@/config";
 
 type Props = {
   list: {
     name: string;
     id: string;
   }[];
-  cookieKey: "stop-zs" | "line-zs";
+  cookieKey: Keys;
 };
 
 function SettingsList({ list: cookieList, cookieKey }: Props) {

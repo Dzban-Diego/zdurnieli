@@ -4,6 +4,7 @@ import Link from "next/link";
 import getLiveTable from "@/actions/getLiveTable";
 import StopCard from "@/components/StopCard";
 import { getLikeStatus, getTheme } from "@/actions";
+import { STOPS_STORAGE_KEY } from "@/config";
 
 type Props = {
   stopId: string;
@@ -14,7 +15,7 @@ type Props = {
 const StopLiveTable: React.FC<Props> = async ({ stopId, stopName }) => {
   const LineTable = await getLiveTable(stopId);
   const Theme = await getTheme();
-  const isLiked = await getLikeStatus("stop-zs", stopId);
+  const isLiked = await getLikeStatus(STOPS_STORAGE_KEY, stopId);
 
   return (
     <>
@@ -26,7 +27,7 @@ const StopLiveTable: React.FC<Props> = async ({ stopId, stopName }) => {
           {stopName}
         </Link>
         <LikeButton
-          cookieKey={"stop-zs"}
+          cookieKey={STOPS_STORAGE_KEY}
           name={stopName}
           id={stopId}
           isLiked={isLiked}

@@ -3,6 +3,7 @@ import getLineStops from "@/actions/getLineStops";
 import LikeButton from "@/components/LikeButton";
 import { CustomLink } from "@/components/CustomLink";
 import { getLikeStatus, getTheme, getLiked } from "@/actions";
+import { LINES_STORAGE_KEY, STOPS_STORAGE_KEY } from "@/config";
 
 type Params = { params: {  lineId: string; lineName: string } };
 
@@ -12,14 +13,14 @@ const LinePage: React.FC<Params> = async ({
 }) => {
   const LineStops = await getLineStops(lineId);
   const Theme = await getTheme();
-  const isLiked = await getLikeStatus("line-zs", lineId);
-  const LikedStops = await getLiked("stop-zs");
+  const isLiked = await getLikeStatus(LINES_STORAGE_KEY, lineId);
+  const LikedStops = await getLiked(STOPS_STORAGE_KEY);
 
   return (
     <>
       <div className={"flex"}>
         <LikeButton
-          cookieKey={"line-zs"}
+          cookieKey={LINES_STORAGE_KEY}
           name={lineName}
           id={lineId}
           Theme={Theme}

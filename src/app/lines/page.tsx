@@ -2,11 +2,12 @@ import React from "react";
 import getLines from "@/actions/getLines";
 import { getLiked } from "@/actions";
 import { CustomLink } from "@/components/CustomLink";
+import { LINES_STORAGE_KEY } from "@/config";
 
 // @ts-ignore
 const Lines: React.FC = async () => {
   const Lines = await getLines();
-  const LikedLines = await getLiked("line-zs");
+  const LikedLines = await getLiked(LINES_STORAGE_KEY);
 
   return (
     <main className={"p-3"}>
