@@ -1,5 +1,8 @@
 "use server";
 import dayjs from "dayjs";
+import utc from 'dayjs/plugin/utc';
+import 'dayjs/locale/pl'
+dayjs.extend(utc)
 
 async function getLiveTable(stopId: string) {
   const stopsResponse = await fetch(
@@ -38,7 +41,7 @@ async function getLiveTable(stopId: string) {
   };
 
   return {
-    time: dayjs().add(2, 'hour').format("HH:mm:ss"),
+    time: dayjs().locale('pl').format("HH:mm:ss"),
     data: data.departures
       .map((departure) => ({
         line: departure.line_number,
