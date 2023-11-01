@@ -1,6 +1,6 @@
 "use server";
 import dayjs from "dayjs";
-import { JSDOM } from "jsdom";
+import { parse } from 'node-html-parser'
 
 type ReturnType = {
   hour: string;
@@ -21,8 +21,8 @@ async function getStopTable(stopId: string): Promise<ReturnType> {
   ).then((res) => {
     return res.text();
   });
-  const dom = new JSDOM(html);
-  const mainElement = dom.window.document.querySelector("main");
+  const dom = parse(html)
+  const mainElement = dom.querySelector("main");
   const collapsed = mainElement?.querySelector(".show");
   const table = collapsed?.querySelector(".table-responsive");
   let data: ReturnType = [];

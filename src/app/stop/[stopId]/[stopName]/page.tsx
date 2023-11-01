@@ -2,6 +2,10 @@ import React from "react";
 import StopLiveTable from "@/components/StopLiveTable";
 import getStopTable from "@/actions/getStopTable";
 
+export const runtime = 'experimental-edge'; // 'nodejs' is the default
+export const preferredRegion = 'fra1'; // only execute this function on iad1
+export const dynamic = 'force-dynamic'; // no caching
+
 type Props = {
   params: { stopName: string; stopId: string };
 };
