@@ -3,6 +3,10 @@ import { CustomLink } from "@/components/CustomLink";
 import SettingsList from "@/components/SettingsList";
 import { LINES_STORAGE_KEY, STOPS_STORAGE_KEY } from "@/config";
 
+export const runtime = 'edge'; // 'nodejs' is the default
+export const preferredRegion = 'fra1'; // only execute this function on iad1
+export const dynamic = 'force-dynamic'; // no caching
+
 async function Page() {
   const Stops = await getLiked(STOPS_STORAGE_KEY);
   const Lines = await getLiked(LINES_STORAGE_KEY);

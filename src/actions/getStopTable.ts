@@ -44,8 +44,7 @@ async function getStopTable(stopId: string): Promise<ReturnType> {
           data[index].departures[aIndex] = {
             minute: parseInt(spanText),
             route: "",
-            // @ts-ignore
-            url: a.href,
+            url: a.attrs.href,
             current: false,
           };
         } else {

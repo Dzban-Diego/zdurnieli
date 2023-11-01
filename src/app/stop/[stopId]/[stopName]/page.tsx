@@ -2,7 +2,7 @@ import React from "react";
 import StopLiveTable from "@/components/StopLiveTable";
 import getStopTable from "@/actions/getStopTable";
 
-export const runtime = 'experimental-edge'; // 'nodejs' is the default
+export const runtime = 'edge'; // 'nodejs' is the default
 export const preferredRegion = 'fra1'; // only execute this function on iad1
 export const dynamic = 'force-dynamic'; // no caching
 
@@ -14,7 +14,6 @@ export default function Stop({ params: { stopId, stopName } }: Props) {
   return (
     <div className={"flex flex-col items-center text-center"}>
       <StopLiveTable stopId={stopId} stopName={decodeURI(stopName)} />
-      {/* @ts-ignore */}
       <BottomTable stopId={stopId} />
     </div>
   );

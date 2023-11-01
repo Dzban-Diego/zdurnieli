@@ -13,7 +13,6 @@ type LikeButtonProps = {
   cookieKey: Keys;
 };
 
-// @ts-ignore
 const LikeButton: React.FC<LikeButtonProps> = ({
   isLiked,
   Theme,

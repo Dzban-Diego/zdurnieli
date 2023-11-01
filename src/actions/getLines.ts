@@ -1,12 +1,12 @@
 "use server";
-import { JSDOM } from "jsdom";
+import { parse } from 'node-html-parser';
 
 export default async function getLines() {
   const html = await fetch(
     "https://www.zditm.szczecin.pl/pl/pasazer/rozklady-jazdy,wedlug-linii"
   ).then((res) => res.text());
-  const dom = new JSDOM(html);
-  const mainElement = dom.window.document.querySelector("main");
+  const dom = parse(html);
+  const mainElement = dom.querySelector("main");
   const categories: {
     header: string;
     lines: { name: string; id: string }[];
@@ -37,7 +37,7 @@ export default async function getLines() {
     });
 
     element.querySelectorAll("a").forEach((a) => {
-      const urlArray = a.href.split("/");
+      const urlArray = a.attrs.href.split("/");
       arr.push({
         name: a.text.trim(),
         id: `${urlArray[urlArray.length - 2]}-${urlArray[urlArray.length - 1]}`,

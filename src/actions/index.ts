@@ -6,7 +6,6 @@ export async function changeTheme() {
   const cookieStore = cookies();
   const Theme = cookieStore.get("theme")?.value;
   const newTheme = Theme === "dark" ? "light" : "dark";
-  //@ts-ignore
   cookieStore.set("theme", newTheme, {
     expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 5),
   });
@@ -33,14 +32,12 @@ export async function handleLike(key: Keys, value: Value) {
 
   if (index !== -1) {
     liked.splice(index, 1);
-    // @ts-ignore
     cookies().set(key, JSON.stringify(liked), {
       expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 5),
     });
     return cookies().get(key)?.value
   } else {
     liked.push(value);
-    // @ts-ignore
     cookies().set(key, JSON.stringify(liked), {
       expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 5),
     });
@@ -69,8 +66,7 @@ export async function checkCookiesExistance(key: Keys) {
   return data !== undefined;
 }
 
-export async function setCookies(key: Keys | "theme", value: Value[] | string) {
-  // @ts-ignore
+export async function setCookies(key: Keys | "theme", value: string) {
   cookies().set(key, value, {
     expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 5),
   });

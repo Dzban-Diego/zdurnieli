@@ -11,7 +11,6 @@ type Props = {
   stopName: string;
 };
 
-// @ts-ignore
 const StopLiveTable: React.FC<Props> = async ({ stopId, stopName }) => {
   const LineTable = await getLiveTable(stopId);
   const Theme = await getTheme();

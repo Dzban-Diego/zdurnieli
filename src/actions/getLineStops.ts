@@ -1,5 +1,5 @@
 "use server";
-import { JSDOM } from "jsdom";
+import { parse } from 'node-html-parser';
 
 /**
  * Pobiera przystanki danej linii
@@ -14,9 +14,11 @@ async function getLineStops(lineId: string) {
     { next: { revalidate: 60 } }
   ).then((res) => res.text());
 
-  const dom = new JSDOM(html);
-  const mainElement = dom.window.document.querySelector("main");
-  const bodyElements = mainElement?.querySelectorAll("tbody");
+  // Obejście problemu ponieważ parse usuwało element main z DOMu
+  const array = html.split('main')
+  const dom = parse(`<main ${array[1]} main>`);
+
+  const bodyElements = dom?.querySelectorAll("tbody");
 
   const data: { name: string; id: string }[][] = [];
 
@@ -26,7 +28,7 @@ async function getLineStops(lineId: string) {
 
     stopElements.forEach((stopEl) => {
       const name = stopEl.textContent?.trim();
-      const urlArray = stopEl.href.split("/");
+      const urlArray = stopEl.attrs.href.split("/");
 
       arr.push({
         name: name || "",
