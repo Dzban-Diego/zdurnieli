@@ -7,6 +7,10 @@ import Link from "next/link";
 import { RiSettings4Fill } from "react-icons/ri";
 import { PropsWithChildren } from "react";
 
+export const runtime = 'edge';
+export const preferredRegion = 'fra1'
+export const dynamic = 'force-dynamic';
+
 export const metadata = {
   title: "Zaraz będę",
   description: "Przestań spóźniać się na przystanki. Z Zaraz będę nigdy nie przeoczysz odjazdu!",

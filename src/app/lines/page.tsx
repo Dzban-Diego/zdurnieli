@@ -4,10 +4,6 @@ import { getLiked } from "@/actions";
 import { CustomLink } from "@/components/CustomLink";
 import { LINES_STORAGE_KEY } from "@/config";
 
-export const runtime = 'edge'; // 'nodejs' is the default
-export const preferredRegion = 'fra1'; // only execute this function on iad1
-export const dynamic = 'force-dynamic'; // no caching
-
 const Lines: React.FC = async () => {
   const Lines = await getLines();
   const LikedLines = await getLiked(LINES_STORAGE_KEY);

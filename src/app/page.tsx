@@ -5,10 +5,6 @@ import CheckLocalStorage from "@/components/CheckLocalStorage";
 import React from "react";
 import { LINES_STORAGE_KEY, STOPS_STORAGE_KEY } from "@/config";
 
-export const runtime = 'edge'; // 'nodejs' is the default
-export const preferredRegion = 'fra1'; // only execute this function on iad1
-export const dynamic = 'force-dynamic'; // no caching
-
 export default async function Home() {
   const stops = await getLiked(STOPS_STORAGE_KEY);
   const lines = await getLiked(LINES_STORAGE_KEY);
