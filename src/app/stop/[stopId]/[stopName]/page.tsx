@@ -1,4 +1,4 @@
-import React, { Suspense } from "react";
+import React from "react";
 import StopLiveTable from "@/components/StopLiveTable";
 import getStopTable from "@/actions/getStopTable";
 
@@ -10,9 +10,6 @@ export default function Stop({ params: { stopId, stopName } }: Props) {
   return (
     <div className={"flex flex-col items-center text-center"}>
       <StopLiveTable stopId={stopId} stopName={decodeURI(stopName)} />
-      <Suspense>
-        <BottomTable stopId={stopId} />
-      </Suspense>
     </div>
   );
 }

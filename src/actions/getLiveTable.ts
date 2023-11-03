@@ -1,55 +1,73 @@
 "use server";
 import dayjs from "dayjs";
-import utc from 'dayjs/plugin/utc';
-dayjs.extend(utc)
+import utc from "dayjs/plugin/utc";
+import parse from "node-html-parser";
+dayjs.extend(utc);
 
-async function getLiveTable(stopId: string) {
-  const stopsResponse = await fetch(
-    "https://www.zditm.szczecin.pl/api/v1/stops"
-  );
+type ReturnType = {
+  time: string;
+  data: {
+    line: string;
+    direction: string;
+    time: string;
+  }[];
+};
 
-  const stops = (await stopsResponse.json()) as {
-    data: { id: number; name: string; number: string }[];
-  };
+type LiveTableResponseType = {
+  lastUpdate: "string";
+  departures: {
+    id: string;
+    delayInSeconds: number;
+    estimatedTime: string;
+    headsign: string;
+    routeId: number;
+    scheduledTripStartTime: string;
+    tripId: number;
+    status: "REALTIME" | "SCHEDULED";
+    theoreticalTime: string;
+    timestamp: string;
+    trip: number;
+    vehicleCode: number;
+    vehicleId: number;
+    vehicleService: number;
+  }[];
+};
 
-  const stopNumber = stops.data.find(
-    (stop) => stop.id.toString() === stopId.split("-")[1]
-  );
+async function getLiveTable(stopId: string): Promise<ReturnType> {
+  const html = await fetch(
+    `https://ztm.gda.pl/rozklady/rozklad-${stopId}-dzien-20231103.html`
+  ).then((d) => {
+    return d.text();
+  });
 
-  if (!stopNumber) {
-    return {
-      time: dayjs().add(2, 'hour').format("HH:mm:ss"),
-      data: [],
-    };
-  }
+  const DOM = parse(html);
+  const footer = DOM.querySelector("#footer");
+  const scriptArray = footer?.querySelector("script")?.innerHTML.split("'");
 
-  const response = await fetch(
-    `https://www.zditm.szczecin.pl/api/v1/displays/${stopNumber.number}`,
-    { next: { revalidate: 0 } }
-  );
+  const liveHtml = await fetch(
+    `https://ztm.gda.pl/rozklady/${scriptArray?.[1]}`
+  ).then((data) => {
+    return data.text();
+  });
+  const liveDOM = parse(liveHtml);
+  liveDOM.querySelector('.legendaSIP')?.remove()
+  const rows = liveDOM.querySelectorAll('li').splice(1, 5)
 
-  const data = (await response.json()) as {
-    stop_name: string;
-    stop_number: string;
-    departures: {
-      line_number: string;
-      direction: string;
-      time_real: number | null;
-      time_scheduled: string | null;
-    }[];
-  };
+  const departures: ReturnType['data'] = []
+
+  rows.forEach(row => {
+    const spans = row.querySelectorAll('span')
+
+    departures.push({
+      time: spans[spans.length - 1]?.textContent,
+      direction: spans[1]?.textContent,
+      line: spans[0]?.textContent,
+    })
+  })
 
   return {
-    time: dayjs().utc().add(1, 'h').format("HH:mm:ss"),
-    data: data.departures
-      .map((departure) => ({
-        line: departure.line_number,
-        direction: departure.direction,
-        time: departure.time_real
-          ? `${departure.time_real} min`
-          : departure.time_scheduled || "",
-      }))
-      .splice(0, 5),
+    time: dayjs().format('HH:mm:ss'),
+    data: departures,
   };
 }
 
