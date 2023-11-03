@@ -56,7 +56,7 @@ function Side({ stops, likedStopsIds}: SideProps) {
       {stops.map((stop) => (
         <CustomLink
           key={stop.id}
-          text={stop.name}
+          text={decodeURIComponent(stop.name)}
           selected={likedStopsIds.includes(stop.id)}
           href={`/stop/${stop.id}/${stop.name}`}
         />

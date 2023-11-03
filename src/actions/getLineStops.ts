@@ -30,7 +30,7 @@ async function getLineStops(lineId: string): Promise<ReturnType> {
       const id = hrefArray?.splice(1, 3).join('-')
 
       return {
-        name: a?.textContent || '',
+        name: encodeURIComponent(a?.textContent || ''),
         id: id,
       };
     }).filter(trip => trip.id !== undefined);

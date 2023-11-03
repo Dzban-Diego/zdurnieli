@@ -23,7 +23,7 @@ const StopLiveTable: React.FC<Props> = async ({ stopId, stopName }) => {
           href={`/stop/${stopId}/${stopName}`}
           className={"p-4 text-2xl text-font dark:text-dark_font"}
         >
-          {stopName}
+          {decodeURIComponent(stopName)}
         </Link>
         <LikeButton
           cookieKey={STOPS_STORAGE_KEY}

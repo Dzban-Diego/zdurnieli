@@ -41,21 +41,21 @@ export default async function getLines(): Promise<ReturnType> {
   routes.routes.forEach((route) => {
     if (route.routeType === "BUS" && route.routeShortName[0] !== "N") {
       types[0].lines.push({
-        id: route.routeId.toString(),
+        id: route.routeShortName,
         name: route.routeShortName,
       });
       return;
     }
     if (route.routeType === "TRAM") {
       types[1].lines.push({
-        id: route.routeId.toString(),
+        id: route.routeShortName,
         name: route.routeShortName,
       });
       return;
     }
     if (route.routeType === "BUS") {
       types[2].lines.push({
-        id: route.routeId.toString(),
+        id: route.routeShortName,
         name: route.routeShortName,
       });
       return;
