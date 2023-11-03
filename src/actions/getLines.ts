@@ -17,7 +17,7 @@ type GD_lines = {
 };
 
 type ReturnType = {
-  header: string;
+  header: "Autobusy" | "Tramwaje" | "Autobusy nocne";
   lines: {
     name: string;
     id: string;
@@ -62,5 +62,16 @@ export default async function getLines(): Promise<ReturnType> {
     }
   });
 
-  return types;
+  return types.map((type) => {
+    const sorted = type.lines.sort((a, b) => {
+      const cutN = type.header === 'Autobusy nocne' 
+      const aName = cutN ? a.name.substring(1, 5) : a.name ;
+      const bName = cutN ? b.name.substring(1, 5) : b.name ;
+      return parseInt(aName) - parseInt(bName);
+    });
+    return {
+      header: type.header,
+      lines: sorted,
+    };
+  });
 }
