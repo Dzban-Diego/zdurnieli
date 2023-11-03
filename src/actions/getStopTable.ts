@@ -1,6 +1,4 @@
 "use server";
-import dayjs from "dayjs";
-import { parse } from 'node-html-parser'
 
 type ReturnType = {
   hour: string;
@@ -13,7 +11,9 @@ type ReturnType = {
 }[];
 
 async function getStopTable(stopId: string): Promise<ReturnType> {
-  return undefined
+  return new Promise((resolve) => {
+    resolve([]);
+  });
 }
 
 export default getStopTable;
