@@ -1,45 +1,45 @@
 "use server";
-import { parse } from 'node-html-parser';
+import { parse } from "node-html-parser";
+
+type ReturnType = { name: string; id: string }[][];
 
 /**
  * Pobiera przystanki danej linii
  * lineId - id:number
  */
-async function getLineStops(lineId: string) {
+async function getLineStops(lineId: string): Promise<ReturnType> {
   const html = await fetch(
-    `https://www.zditm.szczecin.pl/pl/pasazer/rozklady-jazdy,linia,${lineId.replaceAll(
-      "-",
-      "/"
-    )}`,
-    { next: { revalidate: 60 } }
-  ).then((res) => res.text());
+    `https://ztm.gda.pl/rozklady/linia-${lineId}.html`
+  ).then((d) => {
+    return d.text();
+  });
+  const DOM = parse(html);
 
-  // Obejście problemu ponieważ parse usuwało element main z DOMu
-  const array = html.split('main')
-  const dom = parse(`<main ${array[1]} main>`);
+  const table = DOM.querySelector("table");
+  const tds = table?.querySelectorAll("table");
 
-  const bodyElements = dom?.querySelectorAll("tbody");
+  const routes: ReturnType = [];
 
-  const data: { name: string; id: string }[][] = [];
+  tds?.forEach((td) => {
+    const rows = td.querySelectorAll("tr");
 
-  bodyElements?.forEach((element) => {
-    const arr: { name: string; id: string }[] = [];
-    const stopElements = element.querySelectorAll("a");
+    const trip = rows.map((row) => {
+      const a = row.querySelector("a");
 
-    stopElements.forEach((stopEl) => {
-      const name = stopEl.textContent?.trim();
-      const urlArray = stopEl.attrs.href.split("/");
+      const hrefArray = a?.attrs.href.split('-')
+      const id = hrefArray?.splice(1, 3).join('-')
 
-      arr.push({
-        name: name || "",
-        id: `${urlArray[urlArray.length - 4]}-${urlArray[urlArray.length - 3]}-${urlArray[urlArray.length - 2]}`,
-      });
-    });
+      return {
+        name: a?.textContent || '',
+        id: id,
+      };
+    }).filter(trip => trip.id !== undefined);
 
-    data.push(arr.filter((el) => el.name !== ""));
+    // @ts-ignore
+    routes.push(trip);
   });
 
-  return data;
+  return routes;
 }
 
 export default getLineStops;
