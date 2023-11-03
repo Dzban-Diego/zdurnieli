@@ -37,12 +37,14 @@ export default function MyApp({ children }: PropsWithChildren) {
         <header
           className={"mx-3 flex justify-between border-b-2 dark:border-white"}
         >
-          <Link href={"/"}>
+          <Link href={"/"} className='p-4 flex-row flex items-end flex-wrap'>
             <h1
-              className={"p-4 text-4xl font-medium text-black dark:text-white"}
+              className={"mr-3 text-4xl font-medium text-black dark:text-white"}
             >
               Zaraz będę
             </h1>
+            <h3 className='pl-2 border-l border-neutral-500 font-bold text-xl text-neutral-400 dark:text-neutral-200'
+            >Gdańsk</h3>
           </Link>
           <div className="flex flex-row items-center">
             <Link href={"/settings"} className="p-4">
