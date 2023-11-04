@@ -2,10 +2,15 @@ import { getLiked } from "@/actions";
 import { CustomLink } from "@/components/CustomLink";
 import SettingsList from "@/components/SettingsList";
 import { LINES_STORAGE_KEY, STOPS_STORAGE_KEY } from "@/config";
+import { headers } from "next/headers";
 
 async function Page() {
-  const Stops = await getLiked(STOPS_STORAGE_KEY);
-  const Lines = await getLiked(LINES_STORAGE_KEY);
+  const headersList = headers();
+  const domain = headersList.get("x-forwarded-host") || "";
+  const citySlug = domain.split('.')[0]
+
+  const Stops = await getLiked(STOPS_STORAGE_KEY, citySlug);
+  const Lines = await getLiked(LINES_STORAGE_KEY, citySlug);
 
   return (
     <div className="flex flex-col">

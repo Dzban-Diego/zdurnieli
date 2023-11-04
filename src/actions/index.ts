@@ -1,13 +1,7 @@
 "use server";
 import { Keys } from "@/config";
+import { calculateKey } from "@/helpers";
 import { cookies } from "next/headers";
-
-function calculateKey(key: string, city?: string) {
-  if (city) {
-    return `${key}-${city.length > 2 ? "zs" : city}`;
-  }
-  return key
-}
 
 export async function changeTheme() {
   const cookieStore = cookies();

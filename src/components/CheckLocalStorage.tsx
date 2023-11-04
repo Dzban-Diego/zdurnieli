@@ -2,6 +2,7 @@
 import { useEffect } from "react";
 import { setCookies } from "@/actions";
 import { Keys, LINES_STORAGE_KEY, STOPS_STORAGE_KEY } from "@/config";
+import { calculateKey } from "@/helpers";
 
 type Props = {
   line: boolean;
@@ -9,13 +10,6 @@ type Props = {
   theme: boolean;
   citySlug: string;
 };
-
-function calculateKey(key: string, city?: string) {
-  if (city) {
-    return `${key}-${city.length > 2 ? "zs" : city}`;
-  }
-  return key;
-}
 
 function CheckLocalStorage(props: Props) {
   useEffect(() => {
