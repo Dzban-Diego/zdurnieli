@@ -1,9 +1,10 @@
 "use server";
 import dayjs from "dayjs";
 import utc from 'dayjs/plugin/utc';
+import { LiveTable } from "../types";
 dayjs.extend(utc)
 
-async function getLiveTable(stopId: string) {
+async function getLiveTable(stopId: string): Promise<LiveTable> {
   const stopsResponse = await fetch(
     "https://www.zditm.szczecin.pl/api/v1/stops"
   );

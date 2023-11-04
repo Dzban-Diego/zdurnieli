@@ -1,6 +1,7 @@
 import React, { Suspense } from "react";
 import StopLiveTable from "@/components/StopLiveTable";
-import getStopTable from "@/actions/getStopTable";
+import { headers } from "next/headers";
+import getCity from "@/actions/cities";
 
 type Props = {
   params: { stopName: string; stopId: string };
@@ -18,7 +19,10 @@ export default function Stop({ params: { stopId, stopName } }: Props) {
 }
 
 async function BottomTable({ stopId }: { stopId: string }) {
-  const TableData = await getStopTable(stopId);
+  const headersList = headers();
+  const domain = headersList.get("x-forwarded-host") || "";
+  const City = await getCity(domain.split('.')[0]);
+  const TableData = await City.getStopTable(stopId);
 
   return (
     <>

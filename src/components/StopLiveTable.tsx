@@ -1,10 +1,11 @@
 import React from "react";
 import LikeButton from "./LikeButton";
 import Link from "next/link";
-import getLiveTable from "@/actions/getLiveTable";
 import StopCard from "@/components/StopCard";
 import { getLikeStatus, getTheme } from "@/actions";
 import { STOPS_STORAGE_KEY } from "@/config";
+import getCity from "@/actions/cities";
+import { headers } from "next/headers";
 
 type Props = {
   stopId: string;
@@ -12,9 +13,14 @@ type Props = {
 };
 
 const StopLiveTable: React.FC<Props> = async ({ stopId, stopName }) => {
-  const LineTable = await getLiveTable(stopId);
+  const headersList = headers();
+  const domain = headersList.get("x-forwarded-host") || "";
+  const citySlug = domain.split('.')[0]
+  const City = await getCity(citySlug)
+
+  const LineTable = await City.getLiveTable(stopId);
   const Theme = await getTheme();
-  const isLiked = await getLikeStatus(STOPS_STORAGE_KEY, stopId);
+  const isLiked = await getLikeStatus(STOPS_STORAGE_KEY, stopId, citySlug);
 
   return (
     <>
@@ -23,7 +29,7 @@ const StopLiveTable: React.FC<Props> = async ({ stopId, stopName }) => {
           href={`/stop/${stopId}/${stopName}`}
           className={"p-4 text-2xl text-font dark:text-dark_font"}
         >
-          {stopName}
+          {decodeURIComponent(stopName)}
         </Link>
         <LikeButton
           cookieKey={STOPS_STORAGE_KEY}
@@ -31,6 +37,7 @@ const StopLiveTable: React.FC<Props> = async ({ stopId, stopName }) => {
           id={stopId}
           isLiked={isLiked}
           Theme={Theme}
+          citySlug={citySlug}
         />
       </div>
       <div className="bg-white dark:bg-black w-full rounded shadow flex flex-col">

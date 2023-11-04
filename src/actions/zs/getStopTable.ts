@@ -1,18 +1,9 @@
 "use server";
 import dayjs from "dayjs";
 import { parse } from 'node-html-parser'
+import { StopTable } from "../types";
 
-type ReturnType = {
-  hour: string;
-  departures: {
-    minute: number;
-    route: string;
-    url: string;
-    current: boolean;
-  }[];
-}[];
-
-async function getStopTable(stopId: string): Promise<ReturnType> {
+async function getStopTable(stopId: string): Promise<StopTable> {
   const html = await fetch(
     `https://www.zditm.szczecin.pl/pl/pasazer/rozklady-jazdy/tabliczka/${stopId.replaceAll(
       "-",
@@ -25,7 +16,7 @@ async function getStopTable(stopId: string): Promise<ReturnType> {
   const mainElement = dom.querySelector("main");
   const collapsed = mainElement?.querySelector(".show");
   const table = collapsed?.querySelector(".table-responsive");
-  let data: ReturnType = [];
+  let data: StopTable = [];
 
   table?.querySelectorAll("th").forEach((th, index) => {
     data[index] = { hour: th.innerHTML?.trim(), departures: [] };

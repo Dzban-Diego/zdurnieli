@@ -1,12 +1,17 @@
 import React from "react";
-import getLines from "@/actions/getLines";
 import { getLiked } from "@/actions";
 import { CustomLink } from "@/components/CustomLink";
 import { LINES_STORAGE_KEY } from "@/config";
+import getCity from "@/actions/cities";
+import { headers } from "next/headers";
 
 const Lines: React.FC = async () => {
-  const Lines = await getLines();
-  const LikedLines = await getLiked(LINES_STORAGE_KEY);
+  const headersList = headers();
+  const domain = headersList.get("x-forwarded-host") || "";
+  const citySlug = domain.split('.')[0]
+  const City = await getCity(citySlug);
+  const Lines = await City.getLines();
+  const LikedLines = await getLiked(LINES_STORAGE_KEY, citySlug);
 
   return (
     <main className={"p-3"}>
@@ -39,7 +44,7 @@ type LinesListProps = {
   likedLinesIds: string[];
 };
 
-function LinesList({ lines, likedLinesIds}: LinesListProps) {
+function LinesList({ lines, likedLinesIds }: LinesListProps) {
   return (
     <div className={"grid grid-cols-4"}>
       {lines.map((line) => (

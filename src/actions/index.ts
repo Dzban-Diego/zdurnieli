@@ -2,6 +2,13 @@
 import { Keys } from "@/config";
 import { cookies } from "next/headers";
 
+function calculateKey(key: string, city?: string) {
+  if (city) {
+    return `${key}-${city.length > 2 ? "zs" : city}`;
+  }
+  return key
+}
+
 export async function changeTheme() {
   const cookieStore = cookies();
   const Theme = cookieStore.get("theme")?.value;
@@ -23,50 +30,61 @@ type Value = {
   id: string;
 };
 
-export async function handleLike(key: Keys, value: Value) {
+export async function handleLike(k: Keys, value: Value, city: string) {
+  const key = calculateKey(k, city);
   const cookieStore = cookies();
   const likedString = cookieStore.get(key)?.value || "[]";
   const liked = JSON.parse(likedString) as Value[];
 
-  const index = liked.findIndex((item) => item.id.replaceAll('/', '-') === value.id);
+  const index = liked.findIndex(
+    (item) => item.id.replaceAll("/", "-") === value.id
+  );
 
   if (index !== -1) {
     liked.splice(index, 1);
     cookies().set(key, JSON.stringify(liked), {
       expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 5),
     });
-    return cookies().get(key)?.value
+    return cookies().get(key)?.value;
   } else {
     liked.push(value);
     cookies().set(key, JSON.stringify(liked), {
       expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 5),
     });
-    return cookies().get(key)?.value
+    return cookies().get(key)?.value;
   }
 }
 
-export async function getLikeStatus(key: Keys, id: string) {
+export async function getLikeStatus(k: Keys, id: string, city: string) {
+  const key = calculateKey(k, city);
   const likedString = cookies().get(key)?.value || "[]";
   const liked = JSON.parse(likedString) as Value[];
 
-  return liked.findIndex((item) => item.id.replaceAll('/', '-') === id) !== -1;
+  return liked.findIndex((item) => item.id.replaceAll("/", "-") === id) !== -1;
 }
 
-export async function getLiked(key: Keys) {
+export async function getLiked(k: Keys, city: string) {
+  const key = calculateKey(k, city);
   const likedString = cookies().get(key)?.value || "[]";
   const liked = JSON.parse(likedString) as Value[];
   return liked.map((item) => ({
     ...item,
-    id: item.id.replaceAll('/', '-')
+    id: item.id.replaceAll("/", "-"),
   }));
 }
 
-export async function checkCookiesExistance(key: Keys) {
+export async function checkCookiesExistance(k: Keys, city: string) {
+  const key = calculateKey(k, city);
   const data = cookies().get(key)?.value;
   return data !== undefined;
 }
 
-export async function setCookies(key: Keys | "theme", value: string) {
+export async function setCookies(
+  k: Keys | "theme",
+  value: string,
+  city?: string
+) {
+  const key = calculateKey(k, city);
   cookies().set(key, value, {
     expires: new Date(Date.now() + 1000 * 60 * 60 * 24 * 5),
   });

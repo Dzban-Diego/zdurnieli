@@ -11,6 +11,7 @@ type LikeButtonProps = {
   isLiked: boolean;
   Theme: string;
   cookieKey: Keys;
+  citySlug: string
 };
 
 const LikeButton: React.FC<LikeButtonProps> = ({
@@ -19,14 +20,14 @@ const LikeButton: React.FC<LikeButtonProps> = ({
   id,
   name,
   cookieKey,
+  citySlug,
 }) => {
   const [isLikedState, setIsLikedState] = useState(isLiked);
 
-
   async function toggleLike() {
     setIsLikedState(!isLikedState);
-    const data = await handleLike(cookieKey, { id, name });
-    localStorage.setItem(cookieKey, data || '');
+    const data = await handleLike(cookieKey, { id, name }, citySlug);
+    localStorage.setItem(`${cookieKey}-${citySlug.length > 2 ? 'zs' : citySlug}`, data || '');
   }
 
   return (

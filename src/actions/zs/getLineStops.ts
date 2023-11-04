@@ -1,11 +1,12 @@
 "use server";
 import { parse } from 'node-html-parser';
+import { LineStops } from '../types';
 
 /**
  * Pobiera przystanki danej linii
  * lineId - id:number
  */
-async function getLineStops(lineId: string) {
+async function getLineStops(lineId: string): Promise<LineStops> {
   const html = await fetch(
     `https://www.zditm.szczecin.pl/pl/pasazer/rozklady-jazdy,linia,${lineId.replaceAll(
       "-",
@@ -31,7 +32,7 @@ async function getLineStops(lineId: string) {
       const urlArray = stopEl.attrs.href.split("/");
 
       arr.push({
-        name: name || "",
+        name: encodeURIComponent(name || ""),
         id: `${urlArray[urlArray.length - 4]}-${urlArray[urlArray.length - 3]}-${urlArray[urlArray.length - 2]}`,
       });
     });

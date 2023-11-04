@@ -1,7 +1,8 @@
 "use server";
-import { parse } from 'node-html-parser';
+import { parse } from "node-html-parser";
+import { Lines } from "../types";
 
-export default async function getLines() {
+export default async function getLines(): Promise<Lines<string>> {
   const html = await fetch(
     "https://www.zditm.szczecin.pl/pl/pasazer/rozklady-jazdy,wedlug-linii"
   ).then((res) => res.text());
