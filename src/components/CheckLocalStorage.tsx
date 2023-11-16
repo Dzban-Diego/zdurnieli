@@ -37,9 +37,6 @@ function CheckLocalStorage(props: Props) {
       calculateKey(LINES_STORAGE_KEY, props.citySlug)
     );
 
-    console.log(props.citySlug)
-    console.log('old', old_line, old_stop)
-
     if (old_line) {
       const key = calculateKey(LINES_STORAGE_KEY, props.citySlug)
       localStorage.removeItem(key);

@@ -85,7 +85,6 @@ export async function removeCookie(key: Keys | "theme"){
 
 export async function getLines() {
   const City = await getCity()
-  console.log(City)
   return City.getLines()
 }
 
