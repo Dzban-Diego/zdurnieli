@@ -1,6 +1,5 @@
 "use client";
 import { LINES_STORAGE_KEY, STOPS_STORAGE_KEY } from "@/config";
-import { calculateKey } from "@/helpers";
 import { useRef } from "react";
 import { GoCopy } from "react-icons/go";
 import z from "zod";
@@ -12,15 +11,14 @@ const dataStructure = z.object({
 
 type Props = {
   theme: "light" | "dark";
-  citySlug: string
 };
 
-export default function ImportExport({ theme, citySlug }: Props) {
+export default function ImportExport({ theme}: Props) {
   const inputRef = useRef<HTMLInputElement>(null);
 
   function handleExport() {
-    const lines = localStorage.getItem(calculateKey(LINES_STORAGE_KEY, citySlug));
-    const stops = localStorage.getItem(calculateKey(STOPS_STORAGE_KEY, citySlug));
+    const lines = localStorage.getItem(LINES_STORAGE_KEY);
+    const stops = localStorage.getItem(STOPS_STORAGE_KEY);
 
     const data = {
       lines: lines ? JSON.parse(lines) : [],
