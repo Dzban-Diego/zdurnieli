@@ -1,6 +1,10 @@
-export function calculateKey(key: string, city?: string) {
-  if (city) {
-    return `${key}-${city.length > 2 ? "zs" : city}`;
+export function unpacData<T>(data: string, withoutLocalStorage = false) {
+  try {
+    if(withoutLocalStorage){
+      return JSON.parse(data || "") as T;
+    }
+    return JSON.parse(localStorage.getItem(data) || "") as T;
+  } catch {
+    return null;
   }
-  return key
 }

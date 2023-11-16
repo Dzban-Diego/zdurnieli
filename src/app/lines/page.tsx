@@ -1,17 +1,11 @@
 import React from "react";
-import { getLiked } from "@/actions";
+import { getLiked, getLines } from "@/actions";
 import { CustomLink } from "@/components/CustomLink";
 import { LINES_STORAGE_KEY } from "@/config";
-import getCity from "@/actions/cities";
-import { headers } from "next/headers";
 
 const Lines: React.FC = async () => {
-  const headersList = headers();
-  const domain = headersList.get("x-forwarded-host") || "";
-  const citySlug = domain.split('.')[0]
-  const City = await getCity(citySlug);
-  const Lines = await City.getLines();
-  const LikedLines = await getLiked(LINES_STORAGE_KEY, citySlug);
+  const Lines = await getLines();
+  const LikedLines = await getLiked(LINES_STORAGE_KEY);
 
   return (
     <main className={"p-3"}>

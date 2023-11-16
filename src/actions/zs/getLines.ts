@@ -12,6 +12,7 @@ export default async function getLines(): Promise<Lines<string>> {
     header: string;
     lines: { name: string; id: string }[];
   }[] = [];
+
   const h2Elements = mainElement?.querySelectorAll("h2");
   const hidden = [
     "Ostatnie zmiany w rozkładach jazdy",
@@ -29,8 +30,9 @@ export default async function getLines(): Promise<Lines<string>> {
     });
   });
   const ulElements = mainElement?.querySelectorAll(".row");
+
   ulElements?.forEach((element, index) => {
-    const c = categories[index - 1];
+    const c = categories[index - 2];
     const arr: { name: string; id: string }[] = [];
 
     element.querySelectorAll(".visually-hidden").forEach((hidden) => {

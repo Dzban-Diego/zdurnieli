@@ -10,8 +10,8 @@ export default async function Home() {
   const headersList = headers();
   const domain = headersList.get("x-forwarded-host") || "";
   const citySlug = domain.split('.')[0]
-  const stops = await getLiked(STOPS_STORAGE_KEY, citySlug);
-  const lines = await getLiked(LINES_STORAGE_KEY, citySlug);
+  const stops = await getLiked(STOPS_STORAGE_KEY);
+  const lines = await getLiked(LINES_STORAGE_KEY);
   const theme = await getTheme();
 
   const isLines = lines?.length !== 0;
@@ -19,7 +19,7 @@ export default async function Home() {
 
   return (
     <div className="flex flex-col p-2">
-      <CheckLocalStorage theme={!!theme} line={!!lines} stop={!!stops} citySlug={citySlug} />
+      <CheckLocalStorage theme={!!theme} line={!!lines} stop={!!stops} citySlug={citySlug.length > 4 ? 'zs' : citySlug} />
       {!isLines && !isStops ? (
         <span
           className={"mb-4 text-xl text-font dark:text-dark_font text-center"}

@@ -1,25 +1,19 @@
 import React from "react";
 import LikeButton from "@/components/LikeButton";
 import { CustomLink } from "@/components/CustomLink";
-import { getLikeStatus, getTheme, getLiked } from "@/actions";
+import { getLikeStatus, getTheme, getLiked, getLineStops } from "@/actions";
 import { LINES_STORAGE_KEY, STOPS_STORAGE_KEY } from "@/config";
-import { headers } from "next/headers";
-import getCity from "@/actions/cities";
 
 type Params = { params: {  lineId: string; lineName: string } };
 
 const LinePage: React.FC<Params> = async ({
   params: { lineId, lineName },
 }) => {
-  const headersList = headers();
-  const domain = headersList.get("x-forwarded-host") || "";
-  const citySlug = domain.split('.')[0]
-  const City = await getCity(citySlug)
-  const LineStops = await City.getLineStops(lineId);
+  const LineStops = await getLineStops(lineId);
   const Theme = await getTheme();
 
-  const isLiked = await getLikeStatus(LINES_STORAGE_KEY, lineId, citySlug);
-  const LikedStops = await getLiked(STOPS_STORAGE_KEY, citySlug);
+  const isLiked = await getLikeStatus(LINES_STORAGE_KEY, lineId);
+  const LikedStops = await getLiked(STOPS_STORAGE_KEY);
 
   return (
     <>
@@ -30,7 +24,6 @@ const LinePage: React.FC<Params> = async ({
           id={lineId}
           Theme={Theme}
           isLiked={isLiked}
-          citySlug={citySlug}
         />
         <h1 className={"p-4 text-4xl dark:text-dark_font text-font"}>
           Linia {lineName}
