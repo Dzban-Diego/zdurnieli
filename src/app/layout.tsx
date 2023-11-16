@@ -1,19 +1,21 @@
-import { Analytics } from '@vercel/analytics/react';
+import { Analytics } from "@vercel/analytics/react";
 import "./globals.css";
 import Footer from "@/components/Footer";
 import ChangeThemeButton from "@/components/ChangeThemeButton";
 import { cookies } from "next/headers";
 import Link from "next/link";
 import { RiSettings4Fill } from "react-icons/ri";
-import { PropsWithChildren } from "react";
+import { PropsWithChildren, Suspense } from "react";
+import getCity from "@/actions/cities";
 
-export const runtime = 'edge';
-export const preferredRegion = 'fra1'
-export const dynamic = 'force-dynamic';
+export const runtime = "edge";
+export const preferredRegion = "fra1";
+export const dynamic = "force-dynamic";
 
 export const metadata = {
   title: "Zaraz będę",
-  description: "Przestań spóźniać się na przystanki. Z Zaraz będę nigdy nie przeoczysz odjazdu!",
+  description:
+    "Przestań spóźniać się na przystanki. Z Zaraz będę nigdy nie przeoczysz odjazdu!",
   applicationName: "Zaraz będę",
   icons: ["app-icon.png"],
   appleWebApp: {
@@ -27,9 +29,10 @@ export const metadata = {
   },
 };
 
-export default function MyApp({ children }: PropsWithChildren) {
+export default async function MyApp({ children }: PropsWithChildren) {
   const cookieStore = cookies();
   const theme = cookieStore.get("theme")?.value === "dark" ? "dark" : "light";
+  const City = await getCity();
 
   return (
     <html lang={"pl"} className={theme}>
@@ -37,12 +40,19 @@ export default function MyApp({ children }: PropsWithChildren) {
         <header
           className={"mx-3 flex justify-between border-b-2 dark:border-white"}
         >
-          <Link href={"/"}>
+          <Link href={"/"} className="p-4 flex-row flex items-end flex-wrap">
             <h1
-              className={"p-4 text-4xl font-medium text-black dark:text-white"}
+              className={"mr-3 text-4xl font-medium text-black dark:text-white"}
             >
               Zaraz będę
             </h1>
+            {City.subdomain === "gd" && (
+              <Suspense>
+                <h2 className="pl-2 m-0.5 border-l border-neutral-500 font-bold text-xl text-neutral-400 dark:text-neutral-200">
+                  {City.name}
+                </h2>
+              </Suspense>
+            )}
           </Link>
           <div className="flex flex-row items-center">
             <Link href={"/settings"} className="p-4">
