@@ -100,5 +100,5 @@ export async function getLineStops(lineId: string) {
 
 export async function getStopTable(lineId: string) {
   const City = await getCity()
-  return City.getLineStops(lineId)
+  return City.getStopTable(lineId)
 }
