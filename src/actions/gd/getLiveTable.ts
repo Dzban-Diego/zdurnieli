@@ -16,7 +16,6 @@ async function getLiveTable(stopId: string): Promise<LiveTable> {
   const DOM = parse(html);
   const footer = DOM.querySelector("#footer");
   const scriptArray = footer?.querySelector("script")?.innerHTML.split("'");
-  console.log(footer?.querySelector("script")?.innerHTML);
 
   const liveHtml = await fetch(
     `https://ztm.gda.pl/rozklady/${scriptArray?.[1]}`
@@ -24,7 +23,6 @@ async function getLiveTable(stopId: string): Promise<LiveTable> {
     return data.text();
   });
   const liveDOM = parse(liveHtml);
-  console.log(liveHtml);
   liveDOM.querySelector(".legendaSIP")?.remove();
   const rows = liveDOM.querySelectorAll("li").splice(1, 5);
 
