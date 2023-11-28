@@ -29,10 +29,11 @@ export default async function getLines(): Promise<Lines<string>> {
       lines: [],
     });
   });
+
   const ulElements = mainElement?.querySelectorAll(".row");
 
   ulElements?.forEach((element, index) => {
-    const c = categories[index - 2];
+    const c = categories[index - 1];
     const arr: { name: string; id: string }[] = [];
 
     element.querySelectorAll(".visually-hidden").forEach((hidden) => {
