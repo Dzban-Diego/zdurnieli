@@ -1,25 +1,24 @@
 "use server";
 import dayjs from "dayjs";
-import { parse } from 'node-html-parser'
+import { parse } from "node-html-parser";
 import { StopTable } from "../types";
 
 async function getStopTable(stopId: string): Promise<StopTable> {
-  const html = await fetch(
-    `https://www.zditm.szczecin.pl/pl/pasazer/rozklady-jazdy/tabliczka/${stopId.replaceAll(
-      "-",
-      "/"
-    )}`
-  ).then((res) => {
+  const url = `https://www.zditm.szczecin.pl/pl/pasazer/rozklady-jazdy/tabliczka/${stopId.replaceAll(
+    "-",
+    "/"
+  )}`;
+  const html = await fetch(url).then((res) => {
     return res.text();
   });
-  const dom = parse(html)
+  const dom = parse(html);
   const mainElement = dom.querySelector("main");
   const collapsed = mainElement?.querySelector(".show");
   const table = collapsed?.querySelector(".table-responsive");
-  let data: StopTable = [];
+  let data: StopTable['data'] = [];
 
   table?.querySelectorAll("th").forEach((th, index) => {
-    data[index] = { hour: th.innerHTML?.trim(), departures: [] };
+    data[index] = { hour: th.innerHTML?.trim(), departures: []};
   });
 
   table?.querySelectorAll("td").forEach((td, index) => {
@@ -46,10 +45,10 @@ async function getStopTable(stopId: string): Promise<StopTable> {
   });
 
   let isCurrentDeparture = false;
-  const hour = dayjs().add(2, 'h').format("HH");
+  const hour = dayjs().add(2, "h").format("HH");
   const minute = dayjs().format("mm");
 
-  return data.map((table) => {
+  const d = data.map((table) => {
     table.departures = table.departures.map((departure) => {
       const isHourFuture = parseInt(table.hour) > parseInt(hour);
       const isHourNow = parseInt(table.hour) === parseInt(hour);
@@ -67,6 +66,11 @@ async function getStopTable(stopId: string): Promise<StopTable> {
 
     return table;
   });
+
+  return {
+    url,
+    data: d
+  }
 }
 
 export default getStopTable;

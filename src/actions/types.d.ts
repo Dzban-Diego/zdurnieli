@@ -18,11 +18,14 @@ export type LiveTable = {
 };
 
 export type StopTable = {
-	hour: string;
-	departures: {
-		minute: number;
-		route: string;
-		url: string;
-		current: boolean;
+	url: strgin;
+	data: {
+		hour: string;
+		departures: {
+			minute: number;
+			route: string;
+			url: string;
+			current: boolean;
+		}[];
 	}[];
-}[];
+};

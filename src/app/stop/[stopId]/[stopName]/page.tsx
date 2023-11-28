@@ -1,5 +1,6 @@
 import React, { Suspense } from "react";
 import StopLiveTable from "@/components/StopLiveTable";
+import { HiOutlineExternalLink } from "react-icons/hi";
 import { getStopTable } from "@/actions";
 
 type Props = {
@@ -23,18 +24,14 @@ async function BottomTable({ stopId }: { stopId: string }) {
   return (
     <>
       <h2>
-        <a
-          href={`https://www.zditm.szczecin.pl/pl/pasazer/rozklady-jazdy/tabliczka/${stopId.replaceAll(
-            "-",
-            "/"
-          )}`}
-        >
+        <a href={TableData.url} className="flex">
           Rozkład jazdy
+          <HiOutlineExternalLink className="ml-3"/>
         </a>
       </h2>
       <table className="bg-secondary dark:bg-dark_secondary secondary rounded shadow w-full overflow-hidden">
         <tbody>
-          {TableData.map((item) => {
+          {TableData.data.map((item) => {
             return (
               <tr key={item.hour}>
                 <th className="bg-black text-font p-1">{item.hour}</th>
