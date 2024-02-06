@@ -5,76 +5,83 @@ import { Keys, LINES_STORAGE_KEY, STOPS_STORAGE_KEY } from "@/config";
 import { unpacData } from "@/helpers";
 
 export function calculateKey(key: string, city?: string) {
-  if (city) {
-    return `${key}-${city.length > 2 ? "zs" : city}`;
-  }
-  return key
+	if (city) {
+		return `${key}-${city.length > 2 ? "zs" : city}`;
+	}
+	return key;
 }
 
 type Props = {
-  line: boolean;
-  stop: boolean;
-  theme: boolean;
-  citySlug: string;
+	line: boolean;
+	stop: boolean;
+	theme: boolean;
+	citySlug: string;
 };
 
 function CheckLocalStorage(props: Props) {
-  useEffect(() => {
-    const theme = unpacData<string>("theme");
+	useEffect(
+		() =>
+			alert(
+				"Uwaga!\n Domena niebawem wygaśnie. Niestety nie stać mnie na jej utrzymanie(koszt za kolejny rok to 86zł). Strona będzie dalej dostępna na zarazbede.vercel.app pozdro :)",
+			),
+		[],
+	);
 
-    let stop = unpacData<{ name: string; id: string }[]>(STOPS_STORAGE_KEY);
-    let line = unpacData<{ name: string; id: string }[]>(LINES_STORAGE_KEY);
+	useEffect(() => {
+		const theme = unpacData<string>("theme");
 
-    if (props.theme && theme) {
-      setCookies("theme", JSON.stringify(theme));
-    }
-    //-- Tymczasowe naprawieniei by obsługiwać stary system zapisywania danych
+		let stop = unpacData<{ name: string; id: string }[]>(STOPS_STORAGE_KEY);
+		let line = unpacData<{ name: string; id: string }[]>(LINES_STORAGE_KEY);
 
-    const old_stop = unpacData<{ name: string; id: string }[]>(
-      calculateKey(STOPS_STORAGE_KEY, props.citySlug)
-    );
-    const old_line = unpacData<{ name: string; id: string }[]>(
-      calculateKey(LINES_STORAGE_KEY, props.citySlug)
-    );
+		if (props.theme && theme) {
+			setCookies("theme", JSON.stringify(theme));
+		}
+		//-- Tymczasowe naprawieniei by obsługiwać stary system zapisywania danych
 
-    if (old_line) {
-      const key = calculateKey(LINES_STORAGE_KEY, props.citySlug)
-      localStorage.removeItem(key);
-      setCookies(
-        calculateKey(LINES_STORAGE_KEY) as "theme" | Keys,
-        JSON.stringify(old_line)
-      );
-      removeCookie(key as Keys)
-    }
+		const old_stop = unpacData<{ name: string; id: string }[]>(
+			calculateKey(STOPS_STORAGE_KEY, props.citySlug),
+		);
+		const old_line = unpacData<{ name: string; id: string }[]>(
+			calculateKey(LINES_STORAGE_KEY, props.citySlug),
+		);
 
-    if (old_stop) {
-      const key = calculateKey(STOPS_STORAGE_KEY, props.citySlug)
-      localStorage.removeItem(key);
-      setCookies(
-        calculateKey(STOPS_STORAGE_KEY) as "theme" | Keys,
-        JSON.stringify(old_stop)
-      );
-      removeCookie(key as Keys)
+		if (old_line) {
+			const key = calculateKey(LINES_STORAGE_KEY, props.citySlug);
+			localStorage.removeItem(key);
+			setCookies(
+				calculateKey(LINES_STORAGE_KEY) as "theme" | Keys,
+				JSON.stringify(old_line),
+			);
+			removeCookie(key as Keys);
+		}
 
-    }
-    //--
+		if (old_stop) {
+			const key = calculateKey(STOPS_STORAGE_KEY, props.citySlug);
+			localStorage.removeItem(key);
+			setCookies(
+				calculateKey(STOPS_STORAGE_KEY) as "theme" | Keys,
+				JSON.stringify(old_stop),
+			);
+			removeCookie(key as Keys);
+		}
+		//--
 
-    if (props.line && line) {
-      setCookies(
-        calculateKey(LINES_STORAGE_KEY) as "theme" | Keys,
-        JSON.stringify(line)
-      );
-    }
+		if (props.line && line) {
+			setCookies(
+				calculateKey(LINES_STORAGE_KEY) as "theme" | Keys,
+				JSON.stringify(line),
+			);
+		}
 
-    if (props.stop && stop) {
-      setCookies(
-        calculateKey(STOPS_STORAGE_KEY) as "theme" | Keys,
-        JSON.stringify(stop)
-      );
-    }
-  }, [props.citySlug, props.line, props.stop, props.theme]);
+		if (props.stop && stop) {
+			setCookies(
+				calculateKey(STOPS_STORAGE_KEY) as "theme" | Keys,
+				JSON.stringify(stop),
+			);
+		}
+	}, [props.citySlug, props.line, props.stop, props.theme]);
 
-  return null;
+	return null;
 }
 
 export default CheckLocalStorage;
